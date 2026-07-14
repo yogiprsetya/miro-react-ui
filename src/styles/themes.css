@@ -1,0 +1,11 @@
+@theme {
+  --color-neutral-50: #fff;
+  --color-neutral-100: #f8f9fb;
+  --color-neutral-500: #c3c4cd;
+  --color-neutral-700: #72747d;
+  --color-neutral-800: #3f4047;
+
+  --color-primary-600: #0169cd;
+  --color-primary-700: #005dc5;
+  --color-primary-800: #004baf;
+}
