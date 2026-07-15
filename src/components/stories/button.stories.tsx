@@ -13,7 +13,7 @@ const meta = {
   args: {
     children: 'Create issue',
     variant: 'solid',
-    size: '40',
+    size: 'md',
     disabled: false,
     asChild: false,
   },
@@ -24,7 +24,7 @@ const meta = {
     },
     size: {
       control: 'inline-radio',
-      options: ['48', '40', '38'],
+      options: ['lg', 'md', 'sm'],
     },
     onClick: { action: 'clicked' },
   },
@@ -45,7 +45,7 @@ export const Outline: Story = {
 
 export const LargeWithIcon: Story = {
   args: {
-    size: '48',
+    size: 'lg',
     children: (
       <>
         <Plus />
@@ -57,7 +57,7 @@ export const LargeWithIcon: Story = {
 
 export const Small: Story = {
   args: {
-    size: '38',
+    size: 'sm',
     children: 'Quick add',
   },
 };

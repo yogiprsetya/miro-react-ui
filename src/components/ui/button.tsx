@@ -14,9 +14,9 @@ const buttonVariants = cva(
           'bg-transparent border-neutral-500 text-neutral-800 hover:bg-neutral-100 active:text-neutral-700',
       },
       size: {
-        lg: 'py-2.5 px-6 rounded-lg',
-        md: 'py-2 px-4 rounded-lg',
-        sm: 'py-1.5 px-3 rounded-md',
+        lg: 'py-2.5 px-6 tracking-[0.036px] rounded-lg text-lg',
+        md: 'py-2 px-4 tracking-[0.032px] rounded-lg text-base/[24px] font-medium',
+        sm: 'py-1.5 px-3 tracking-[0.042px] rounded-md text-sm',
       },
     },
     defaultVariants: {
