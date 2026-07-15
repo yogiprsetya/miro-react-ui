@@ -1,19 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Switch } from '~/components/ui/switch';
+import { Checkbox } from '~/components/ui/checkbox';
 
 /**
- * Use `Switch` for immediate on/off settings.
- * Prefer it over a checkbox when the change should happen instantly after interaction.
+ * Use `Checkbox` when users can select one or more independent options.
+ * Prefer it over a switch when the choice should be reviewed before form submission.
  */
 const meta = {
-  title: 'Components/Switch',
-  component: Switch,
+  title: 'Components/Checkbox',
+  component: Checkbox,
   tags: ['autodocs'],
   args: {
     checked: false,
     disabled: false,
     size: 'md',
-    'aria-label': 'Enable notifications',
+    'aria-label': 'Accept terms',
   },
   argTypes: {
     size: {
@@ -22,7 +22,7 @@ const meta = {
     },
     onCheckedChange: { action: 'checked changed' },
   },
-} satisfies Meta<typeof Switch>;
+} satisfies Meta<typeof Checkbox>;
 
 export default meta;
 
@@ -37,12 +37,14 @@ export const Checked: Story = {
 export const Small: Story = {
   args: {
     size: 'sm',
+    'aria-label': 'Receive updates',
   },
 };
 
 export const Large: Story = {
   args: {
     size: 'lg',
+    'aria-label': 'Share workspace access',
   },
 };
 
