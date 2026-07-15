@@ -11,12 +11,12 @@ describe('Button', () => {
     expect(button).toBeInTheDocument();
     expect(button).toHaveAttribute('data-slot', 'button');
     expect(button).toHaveAttribute('data-variant', 'solid');
-    expect(button).toHaveAttribute('data-size', '40');
+    expect(button).toHaveAttribute('data-size', 'md');
   });
 
   it('applies outline and compact variants', () => {
     render(
-      <Button variant="outline" size="38">
+      <Button variant="outline" size="sm">
         Secondary action
       </Button>
     );
@@ -24,7 +24,7 @@ describe('Button', () => {
     const button = screen.getByRole('button', { name: 'Secondary action' });
 
     expect(button).toHaveAttribute('data-variant', 'outline');
-    expect(button).toHaveAttribute('data-size', '38');
+    expect(button).toHaveAttribute('data-size', 'sm');
     expect(button.className).toContain('border-neutral-500');
     expect(button.className).toContain('rounded-md');
   });
@@ -48,6 +48,6 @@ describe('Button', () => {
     expect(link).toHaveAttribute('href', '/issues/new');
     expect(link).toHaveAttribute('data-slot', 'button');
     expect(link).toHaveAttribute('data-variant', 'solid');
-    expect(link).toHaveAttribute('data-size', '40');
+    expect(link).toHaveAttribute('data-size', 'md');
   });
 });

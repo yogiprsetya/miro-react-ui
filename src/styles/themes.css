@@ -1,6 +1,7 @@
-@theme {
+@theme inline {
   --color-neutral-50: #fff;
   --color-neutral-100: #f8f9fb;
+  --color-neutral-400: #dfe0e7;
   --color-neutral-500: #c3c4cd;
   --color-neutral-700: #72747d;
   --color-neutral-800: #3f4047;

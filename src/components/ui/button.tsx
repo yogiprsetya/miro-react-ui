@@ -14,14 +14,14 @@ const buttonVariants = cva(
           'bg-transparent border-neutral-500 text-neutral-800 hover:bg-neutral-100 active:text-neutral-700',
       },
       size: {
-        '48': 'py-2.5 px-6 rounded-lg',
-        '40': 'py-2 px-4 rounded-lg',
-        '38': 'py-1.5 px-3 rounded-md',
+        lg: 'py-2.5 px-6 rounded-lg',
+        md: 'py-2 px-4 rounded-lg',
+        sm: 'py-1.5 px-3 rounded-md',
       },
     },
     defaultVariants: {
       variant: 'solid',
-      size: '40',
+      size: 'md',
     },
     compoundVariants: [],
   }
@@ -32,7 +32,7 @@ type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 function Button({
   className,
   variant = 'solid',
-  size = '40',
+  size = 'md',
   asChild = false,
   ...props
 }: React.ComponentProps<'button'> &
