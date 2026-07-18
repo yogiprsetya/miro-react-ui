@@ -13,9 +13,17 @@
   --color-primary-700: #005dc5;
   --color-primary-800: #004baf;
 
+  --color-error-50: #ffece8;
   --color-error-500: #ef4c49;
+  --color-error-800: #9b001c;
+
+  --color-success-50: #e8ffee;
   --color-success-600: #00944d;
+  --color-success-800: #005929;
+
+  --color-warning-50: #ffffe7;
   --color-warning-600: #ca8828;
+  --color-warning-800: #7d4211;
 
   --shadow-elevation-2: 0 4px 8px 0 rgba(142, 142, 142, 0.16);
 }
