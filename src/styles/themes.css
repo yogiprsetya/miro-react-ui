@@ -14,4 +14,8 @@
   --color-primary-800: #004baf;
 
   --color-error-500: #ef4c49;
+  --color-success-600: #00944d;
+  --color-warning-600: #ca8828;
+
+  --shadow-elevation-2: 0 4px 8px 0 rgba(142, 142, 142, 0.16);
 }
