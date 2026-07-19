@@ -1,4 +1,3 @@
-import { useTheme } from 'next-themes';
 import { Toaster as Sonner, type ToasterProps } from 'sonner';
 import {
   CircleCheckIcon,
@@ -11,11 +10,9 @@ import {
 import { cn } from '~/lib/utils';
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = 'system' } = useTheme();
-
   return (
     <Sonner
-      theme={theme as ToasterProps['theme']}
+      theme="system"
       icons={{
         success: <CircleCheckIcon />,
         info: <InfoIcon />,

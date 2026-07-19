@@ -13,7 +13,7 @@ const badgeVariants = cva(
         primary: 'bg-primary-50 text-primary-800',
         warning: 'bg-warning-50 text-warning-800',
         success: 'bg-success-50 text-success-800',
-        error: 'bg-warning-50 text-warning-800',
+        error: 'bg-error-50 text-error-800',
       },
       size: {
         small: 'text-xs h-6.5',

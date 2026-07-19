@@ -74,14 +74,13 @@ src/
 **Component pattern to follow for every new component:**
 
 - One folder per component under `src/components/`
-- Co-located test file (`.test.tsx`) and story file (`.stories.tsx`) — never skip either
 - Export through an `index.ts` barrel file
 - Props typed explicitly with a documented TypeScript interface (no `any`)
 - Variants driven by `class-variance-authority` (cva) pattern, consistent with shadcn conventions
 
 ## Design Tokens
 
-All colors, spacing, radii, and typography are defined as CSS variables in `src/styles/globals.css` and mapped into `tailwind.config.ts`. **Never hardcode raw hex values or arbitrary Tailwind values (`text-[#123456]`) in components** — always reference a token. If a needed token doesn't exist, add it to the token file first, then use it.
+All colors, spacing, radii, and typography are defined as CSS variables in `src/styles/themes.css`. **Never hardcode raw hex values or arbitrary Tailwind values (`text-[#123456]`) in components** — always reference a token. If a needed token doesn't exist, add it to the token file first, then use it.
 
 ## Testing Conventions
 
@@ -92,7 +91,7 @@ All colors, spacing, radii, and typography are defined as CSS variables in `src/
 
 ## Storybook Conventions
 
-- Every component needs a `.stories.tsx` with at minimum: a `Default` story and one story per variant/state (loading, disabled, error, etc.).
+- Every component needs a `component/stories/[name].stories.tsx` with at minimum: a `Default` story and one story per variant/state (loading, disabled, error, etc.).
 - Use `argTypes` to expose all props as interactive controls.
 - Write a short docstring at the top of each story file describing when to use the component vs. alternatives (this becomes the README-in-context in Storybook's autodocs).
 
