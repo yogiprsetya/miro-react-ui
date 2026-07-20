@@ -16,11 +16,17 @@ function RadioGroup({
   );
 }
 
-type RadioItemProp = React.ComponentProps<typeof RadioGroupPrimitive.Item> & {
+type RadioGroupItemProps = React.ComponentProps<
+  typeof RadioGroupPrimitive.Item
+> & {
   size?: 'sm' | 'md' | 'lg';
 };
 
-function RadioGroupItem({ className, size = 'md', ...props }: RadioItemProp) {
+function RadioGroupItem({
+  className,
+  size = 'md',
+  ...props
+}: RadioGroupItemProps) {
   return (
     <RadioGroupPrimitive.Item
       data-slot="radio-group-item"

@@ -40,9 +40,18 @@ export const WithLabel: Story = {
 };
 
 export const Invalid: Story = {
+  render: (args) => (
+    <div className="flex w-80 flex-col gap-1">
+      <Label htmlFor="invalid-textarea">Board description</Label>
+      <Textarea {...args} id="invalid-textarea" aria-label={undefined} />
+      <p id="invalid-textarea-error" className="text-sm text-error-600">
+        Add at least one sentence.
+      </p>
+    </div>
+  ),
   args: {
-    'aria-label': 'Board description',
     'aria-invalid': 'true',
+    'aria-describedby': 'invalid-textarea-error',
     defaultValue: 'This description is too short',
   },
 };

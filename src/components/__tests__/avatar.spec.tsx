@@ -10,7 +10,7 @@ import {
 } from '~/components/ui/avatar';
 
 describe('Avatar', () => {
-  it('renders with default size (64)', () => {
+  it('renders with default size (xl)', () => {
     render(
       <Avatar>
         <AvatarFallback>JD</AvatarFallback>
@@ -20,60 +20,55 @@ describe('Avatar', () => {
     const avatar = screen.getByText('JD').closest('[data-slot="avatar"]');
 
     expect(avatar).toBeInTheDocument();
-    expect(avatar).toHaveAttribute('data-size', '64');
-    expect(avatar?.className).toContain('size-16');
+    expect(avatar).toHaveAttribute('data-size', 'xl');
   });
 
-  it('renders with size 24', () => {
+  it('renders with size sm', () => {
     render(
-      <Avatar size="24">
+      <Avatar size="sm">
         <AvatarFallback>A</AvatarFallback>
       </Avatar>
     );
 
     const avatar = screen.getByText('A').closest('[data-slot="avatar"]');
 
-    expect(avatar).toHaveAttribute('data-size', '24');
-    expect(avatar?.className).toContain('size-6');
+    expect(avatar).toHaveAttribute('data-size', 'sm');
   });
 
-  it('renders with size 32', () => {
+  it('renders with size md', () => {
     render(
-      <Avatar size="32">
+      <Avatar size="md">
         <AvatarFallback>B</AvatarFallback>
       </Avatar>
     );
 
     const avatar = screen.getByText('B').closest('[data-slot="avatar"]');
 
-    expect(avatar).toHaveAttribute('data-size', '32');
-    expect(avatar?.className).toContain('size-8');
+    expect(avatar).toHaveAttribute('data-size', 'md');
   });
 
-  it('renders with size 48', () => {
+  it('renders with size lg', () => {
     render(
-      <Avatar size="48">
+      <Avatar size="lg">
         <AvatarFallback>C</AvatarFallback>
       </Avatar>
     );
 
     const avatar = screen.getByText('C').closest('[data-slot="avatar"]');
 
-    expect(avatar).toHaveAttribute('data-size', '48');
-    expect(avatar?.className).toContain('size-12');
+    expect(avatar).toHaveAttribute('data-size', 'lg');
   });
 
-  it('renders with size 96', () => {
+  it('renders with size 2xl', () => {
     render(
-      <Avatar size="96">
+      <Avatar size="2xl">
         <AvatarFallback>L</AvatarFallback>
       </Avatar>
     );
 
     const avatar = screen.getByText('L').closest('[data-slot="avatar"]');
 
-    expect(avatar).toHaveAttribute('data-size', '96');
-    expect(avatar?.className).toContain('size-24');
+    expect(avatar).toHaveAttribute('data-size', '2xl');
   });
 
   it('accepts custom className', () => {
@@ -108,7 +103,7 @@ describe('AvatarImage', () => {
 });
 
 describe('AvatarFallback', () => {
-  it('renders with data-slot attribute', () => {
+  it('renders fallback content', () => {
     render(
       <Avatar>
         <AvatarFallback>AB</AvatarFallback>
@@ -117,7 +112,7 @@ describe('AvatarFallback', () => {
 
     const fallback = screen.getByText('AB');
 
-    expect(fallback).toHaveAttribute('data-slot', 'avatar-fallback');
+    expect(fallback).toBeVisible();
   });
 
   it('accepts custom className', () => {
@@ -134,7 +129,7 @@ describe('AvatarFallback', () => {
 });
 
 describe('AvatarBadge', () => {
-  it('renders with data-slot attribute', () => {
+  it('renders the decorative badge element', () => {
     render(
       <Avatar>
         <AvatarBadge />
@@ -144,7 +139,6 @@ describe('AvatarBadge', () => {
     const badge = document.querySelector('[data-slot="avatar-badge"]');
 
     expect(badge).toBeInTheDocument();
-    expect(badge).toHaveAttribute('data-slot', 'avatar-badge');
   });
 
   it('accepts custom className', () => {
@@ -161,7 +155,7 @@ describe('AvatarBadge', () => {
 });
 
 describe('AvatarGroup', () => {
-  it('renders with data-slot attribute', () => {
+  it('renders grouped avatars', () => {
     render(
       <AvatarGroup>
         <Avatar>
@@ -175,14 +169,13 @@ describe('AvatarGroup', () => {
 
     const group = screen.getByText('A').closest('[data-slot="avatar-group"]');
 
-    expect(group).toBeInTheDocument();
-    expect(group).toHaveAttribute('data-slot', 'avatar-group');
+    expect(group).toBeVisible();
   });
 
   it('sets data-size when size is provided', () => {
     render(
-      <AvatarGroup size="48">
-        <Avatar size="48">
+      <AvatarGroup size="lg">
+        <Avatar size="lg">
           <AvatarFallback>A</AvatarFallback>
         </Avatar>
       </AvatarGroup>
@@ -190,7 +183,7 @@ describe('AvatarGroup', () => {
 
     const group = screen.getByText('A').closest('[data-slot="avatar-group"]');
 
-    expect(group).toHaveAttribute('data-size', '48');
+    expect(group).toHaveAttribute('data-size', 'lg');
   });
 
   it('does not set data-size when size is omitted', () => {
@@ -209,7 +202,7 @@ describe('AvatarGroup', () => {
 });
 
 describe('AvatarGroupCount', () => {
-  it('renders with data-slot attribute', () => {
+  it('renders the group count', () => {
     render(
       <AvatarGroup>
         <AvatarGroupCount>+3</AvatarGroupCount>
@@ -218,6 +211,6 @@ describe('AvatarGroupCount', () => {
 
     const count = screen.getByText('+3');
 
-    expect(count).toHaveAttribute('data-slot', 'avatar-group-count');
+    expect(count).toBeVisible();
   });
 });

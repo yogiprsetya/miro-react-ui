@@ -34,7 +34,7 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof Tooltip>;
+} satisfies Meta<typeof TooltipContent>;
 
 export default meta;
 
@@ -50,7 +50,6 @@ export const Default: Story = {
 };
 
 export const Right: Story = {
-  name: 'Side: Right',
   render: (args) => (
     <Tooltip>
       <TooltipTrigger>Hover me</TooltipTrigger>
@@ -89,7 +88,6 @@ export const Left: Story = {
 };
 
 export const WithDescription: Story = {
-  name: 'With Description',
   render: (args) => (
     <Tooltip>
       <TooltipTrigger>Hover me</TooltipTrigger>

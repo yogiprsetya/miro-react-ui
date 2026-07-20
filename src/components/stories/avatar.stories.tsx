@@ -17,12 +17,12 @@ const meta = {
   component: Avatar,
   tags: ['autodocs'],
   args: {
-    size: '64',
+    size: 'xl',
   },
   argTypes: {
     size: {
       control: 'inline-radio',
-      options: ['24', '32', '48', '64', '96'],
+      options: ['sm', 'md', 'lg', 'xl', '2xl'],
     },
   },
 } satisfies Meta<typeof Avatar>;
@@ -52,7 +52,7 @@ export const WithImage: Story = {
 };
 
 export const Size24: Story = {
-  args: { size: '24' },
+  args: { size: 'sm' },
   render: (args) => (
     <Avatar {...args}>
       <AvatarFallback>AB</AvatarFallback>
@@ -61,7 +61,7 @@ export const Size24: Story = {
 };
 
 export const Size32: Story = {
-  args: { size: '32' },
+  args: { size: 'md' },
   render: (args) => (
     <Avatar {...args}>
       <AvatarFallback>CD</AvatarFallback>
@@ -70,7 +70,7 @@ export const Size32: Story = {
 };
 
 export const Size48: Story = {
-  args: { size: '48' },
+  args: { size: 'lg' },
   render: (args) => (
     <Avatar {...args}>
       <AvatarFallback>EF</AvatarFallback>
@@ -79,7 +79,7 @@ export const Size48: Story = {
 };
 
 export const Size96: Story = {
-  args: { size: '96' },
+  args: { size: '2xl' },
   render: (args) => (
     <Avatar {...args}>
       <AvatarFallback>GH</AvatarFallback>
@@ -132,19 +132,19 @@ export const Group: Story = {
 export const AllSizes: Story = {
   render: () => (
     <div className="flex items-end gap-4">
-      <Avatar size="24">
+      <Avatar size="sm">
         <AvatarFallback>A</AvatarFallback>
       </Avatar>
-      <Avatar size="32">
+      <Avatar size="md">
         <AvatarFallback>B</AvatarFallback>
       </Avatar>
-      <Avatar size="48">
+      <Avatar size="lg">
         <AvatarFallback>C</AvatarFallback>
       </Avatar>
-      <Avatar size="64">
+      <Avatar size="xl">
         <AvatarFallback>D</AvatarFallback>
       </Avatar>
-      <Avatar size="96">
+      <Avatar size="2xl">
         <AvatarFallback>E</AvatarFallback>
       </Avatar>
     </div>

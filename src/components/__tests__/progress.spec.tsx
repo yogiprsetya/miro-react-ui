@@ -11,21 +11,39 @@ describe('Progress', () => {
     expect(root).toHaveAttribute('role', 'progressbar');
     expect(root).toHaveAttribute('data-state', 'indeterminate');
 
-    const indicator = container.querySelector('[data-slot="progress-indicator"]');
+    const indicator = container.querySelector(
+      '[data-slot="progress-indicator"]'
+    );
     expect(indicator).toBeInTheDocument();
   });
 
   it('translates the indicator based on value', () => {
     const { container } = render(<Progress value={75} />);
 
-    const indicator = container.querySelector('[data-slot="progress-indicator"]');
+    const indicator = container.querySelector(
+      '[data-slot="progress-indicator"]'
+    );
     expect(indicator).toHaveStyle({ transform: 'translateX(-25%)' });
+  });
+
+  it.each([
+    [-20, 'translateX(-100%)'],
+    [120, 'translateX(0%)'],
+  ])('clamps value %i to the valid range', (value, transform) => {
+    const { container } = render(<Progress value={value} />);
+
+    const indicator = container.querySelector(
+      '[data-slot="progress-indicator"]'
+    );
+    expect(indicator).toHaveStyle({ transform });
   });
 
   it('renders at 0% when value is not provided', () => {
     const { container } = render(<Progress />);
 
-    const indicator = container.querySelector('[data-slot="progress-indicator"]');
+    const indicator = container.querySelector(
+      '[data-slot="progress-indicator"]'
+    );
     expect(indicator).toHaveStyle({ transform: 'translateX(-100%)' });
   });
 

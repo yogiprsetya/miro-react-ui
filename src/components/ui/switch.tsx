@@ -3,11 +3,11 @@ import { Switch as SwitchPrimitive } from 'radix-ui';
 
 import { cn } from '~/lib/utils';
 
-type SwitchProp = React.ComponentProps<typeof SwitchPrimitive.Root> & {
+type SwitchProps = React.ComponentProps<typeof SwitchPrimitive.Root> & {
   size?: 'sm' | 'md' | 'lg';
 };
 
-function Switch({ className, size = 'md', ...props }: SwitchProp) {
+function Switch({ className, size = 'md', ...props }: SwitchProps) {
   return (
     <SwitchPrimitive.Root
       data-slot="switch"
@@ -31,9 +31,8 @@ function Switch({ className, size = 'md', ...props }: SwitchProp) {
         data-slot="switch-thumb"
         className={cn(
           'pointer-events-none block rounded-full bg-neutral-50 ring-0 transition-transform',
-          props.checked
-            ? 'translate-x-[calc(100%-1px)]'
-            : 'data-[state=unchecked]:translate-x-0',
+          'data-[state=checked]:translate-x-[calc(100%-1px)]',
+          'data-[state=unchecked]:translate-x-0',
           {
             'size-3': size === 'sm',
             'size-4': size === 'md',

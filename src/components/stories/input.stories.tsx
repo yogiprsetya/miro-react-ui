@@ -44,9 +44,18 @@ export const WithLabel: Story = {
 };
 
 export const Invalid: Story = {
+  render: (args) => (
+    <div className="flex w-80 flex-col gap-1">
+      <Label htmlFor="invalid-input">Workspace slug</Label>
+      <Input {...args} id="invalid-input" aria-label={undefined} />
+      <p id="invalid-input-error" className="text-sm text-error-600">
+        Use lowercase letters, numbers, and hyphens.
+      </p>
+    </div>
+  ),
   args: {
-    'aria-label': 'Workspace slug',
     'aria-invalid': 'true',
+    'aria-describedby': 'invalid-input-error',
     defaultValue: 'invalid slug',
   },
 };

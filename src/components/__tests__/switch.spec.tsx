@@ -39,6 +39,17 @@ describe('Switch', () => {
     expect(onCheckedChange).toHaveBeenCalledWith(true);
   });
 
+  it('moves the thumb for an uncontrolled checked switch', () => {
+    render(<Switch aria-label="Sync status" defaultChecked />);
+
+    const thumb = screen
+      .getByRole('switch', { name: 'Sync status' })
+      .querySelector('[data-slot="switch-thumb"]');
+
+    expect(thumb).toHaveAttribute('data-state', 'checked');
+    expect(thumb?.className).toContain('data-[state=checked]:translate-x');
+  });
+
   it('supports disabled state', () => {
     render(<Switch aria-label="Focus mode" disabled />);
 

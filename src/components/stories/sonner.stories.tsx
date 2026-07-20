@@ -93,9 +93,13 @@ export const Warning: Story = {
 };
 
 export const TopCenter: Story = {
-  render: (args) => <ToastTrigger {...args} variant="default" />,
+  render: (args) => (
+    <ToastTrigger {...args} position="top-center" variant="default" />
+  ),
 };
 
 export const CloseButtonHidden: Story = {
-  render: (args) => <ToastTrigger {...args} variant="default" />,
+  render: (args) => (
+    <ToastTrigger {...args} closeButton={false} variant="default" />
+  ),
 };

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Plus } from 'lucide-react';
+import { expect, fn, userEvent, within } from 'storybook/test';
 import { Button } from '~/components/ui/button';
 
 /**
@@ -57,6 +58,20 @@ export const Small: Story = {
   args: {
     size: 'sm',
     children: 'Quick add',
+  },
+};
+
+export const Interaction: Story = {
+  args: {
+    onClick: fn(),
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole('button', { name: 'Create issue' });
+
+    await userEvent.click(button);
+
+    await expect(args.onClick).toHaveBeenCalledOnce();
   },
 };
 

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import {
@@ -38,5 +38,47 @@ describe('Tooltip', () => {
     );
 
     expect(ref.current).toBeInstanceOf(HTMLButtonElement);
+  });
+
+  it('opens on focus and links the description to the trigger', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>Keyboard help</TooltipTrigger>
+          <TooltipContent>Helpful keyboard guidance</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    );
+
+    const trigger = screen.getByRole('button', { name: 'Keyboard help' });
+    await user.tab();
+
+    const content = await screen.findByRole('tooltip', {
+      name: 'Helpful keyboard guidance',
+    });
+    expect(trigger).toHaveAttribute('aria-describedby', content.id);
+  });
+
+  it('closes after Escape', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>Dismiss help</TooltipTrigger>
+          <TooltipContent>Dismissible guidance</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    );
+
+    await user.tab();
+    expect(await screen.findByRole('tooltip')).toBeInTheDocument();
+
+    await user.keyboard('{Escape}');
+    await waitFor(() => {
+      expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+    });
   });
 });

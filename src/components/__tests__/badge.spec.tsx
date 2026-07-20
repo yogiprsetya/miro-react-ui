@@ -47,7 +47,7 @@ describe('Badge', () => {
     const badge = screen.getByText('Failed');
 
     expect(badge).toHaveAttribute('data-variant', 'error');
-    expect(badge.className).toContain('bg-warning-50');
+    expect(badge.className).toContain('bg-error-50');
   });
 
   it('applies small size', () => {

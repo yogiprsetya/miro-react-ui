@@ -15,7 +15,10 @@
 
   --color-error-50: #ffece8;
   --color-error-500: #ef4c49;
+  --color-error-600: #cd3e3f;
   --color-error-800: #9b001c;
+
+  --color-focus: var(--color-primary-600);
 
   --color-success-50: #e8ffee;
   --color-success-600: #00944d;

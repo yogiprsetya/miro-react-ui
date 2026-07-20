@@ -26,9 +26,12 @@ describe('Toaster', () => {
 
     await user.click(screen.getByRole('button', { name: 'Show toast' }));
 
-    expect(
-      await screen.findByRole('region', { name: /notifications/i })
-    ).toBeInTheDocument();
+    const region = await screen.findByRole('region', {
+      name: /notifications/i,
+    });
+
+    expect(region).toBeInTheDocument();
+    expect(region).toHaveAttribute('aria-live', 'polite');
   });
 
   it('passes theme and style props to the underlying toaster', async () => {
@@ -121,6 +124,28 @@ describe('Toaster', () => {
 
     const closeButton = screen.getByRole('button', { name: 'Close toast' });
     await user.click(closeButton);
+
+    expect(onDismiss).toHaveBeenCalledOnce();
+  });
+
+  it('supports keyboard dismissal through the close button', async () => {
+    const user = userEvent.setup();
+    const onDismiss = vi.fn();
+
+    render(
+      <TestApp
+        onToast={() => toast('Keyboard dismissible', { onDismiss })}
+        closeButton
+      />
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Show toast' }));
+    const closeButton = await screen.findByRole('button', {
+      name: 'Close toast',
+    });
+
+    closeButton.focus();
+    await user.keyboard('{Enter}');
 
     expect(onDismiss).toHaveBeenCalledOnce();
   });

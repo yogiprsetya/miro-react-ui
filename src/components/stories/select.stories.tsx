@@ -119,3 +119,21 @@ export const Disabled: Story = {
     />
   ),
 };
+
+export const Invalid: Story = {
+  render: (args) => (
+    <div className="flex flex-col gap-1">
+      <SelectDemo
+        {...args}
+        label="Team role"
+        aria-invalid="true"
+        aria-describedby="invalid-select-error"
+        value={undefined}
+        defaultValue={undefined}
+      />
+      <p id="invalid-select-error" className="text-sm text-error-600">
+        Select a team role.
+      </p>
+    </div>
+  ),
+};

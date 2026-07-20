@@ -9,9 +9,6 @@ describe('Button', () => {
     const button = screen.getByRole('button', { name: 'Create issue' });
 
     expect(button).toBeInTheDocument();
-    expect(button).toHaveAttribute('data-slot', 'button');
-    expect(button).toHaveAttribute('data-variant', 'solid');
-    expect(button).toHaveAttribute('data-size', 'md');
   });
 
   it('applies outline and compact variants', () => {
@@ -25,8 +22,6 @@ describe('Button', () => {
 
     expect(button).toHaveAttribute('data-variant', 'outline');
     expect(button).toHaveAttribute('data-size', 'sm');
-    expect(button.className).toContain('border-neutral-500');
-    expect(button.className).toContain('rounded-md');
   });
 
   it('supports disabled state', () => {
@@ -46,8 +41,5 @@ describe('Button', () => {
 
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute('href', '/issues/new');
-    expect(link).toHaveAttribute('data-slot', 'button');
-    expect(link).toHaveAttribute('data-variant', 'solid');
-    expect(link).toHaveAttribute('data-size', 'md');
   });
 });

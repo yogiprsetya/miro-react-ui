@@ -7,6 +7,9 @@ function Progress({
   value,
   ...props
 }: React.ComponentProps<typeof ProgressPrimitive.Root>) {
+  const clampedValue = Math.min(100, Math.max(0, value ?? 0));
+  const translation = clampedValue === 100 ? 0 : 100 - clampedValue;
+
   return (
     <ProgressPrimitive.Root
       data-slot="progress"
@@ -19,7 +22,9 @@ function Progress({
       <ProgressPrimitive.Indicator
         data-slot="progress-indicator"
         className="bg-primary-600 size-full flex-1 transition-all"
-        style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
+        style={{
+          transform: `translateX(${translation === 0 ? 0 : `-${translation}`}%)`,
+        }}
       />
     </ProgressPrimitive.Root>
   );

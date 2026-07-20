@@ -38,7 +38,10 @@ if (typeof window !== 'undefined' && window.PointerEvent) {
   };
 }
 
-if (typeof Element !== 'undefined' && !('hasPointerCapture' in Element.prototype)) {
+if (
+  typeof Element !== 'undefined' &&
+  !('hasPointerCapture' in Element.prototype)
+) {
   Object.assign(Element.prototype, {
     hasPointerCapture: () => false,
     setPointerCapture: () => {},
@@ -47,3 +50,12 @@ if (typeof Element !== 'undefined' && !('hasPointerCapture' in Element.prototype
   });
 }
 
+if (typeof ResizeObserver === 'undefined') {
+  class ResizeObserver {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  }
+
+  globalThis.ResizeObserver = ResizeObserver;
+}
