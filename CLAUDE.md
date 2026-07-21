@@ -90,6 +90,11 @@ on the system layer.
 
 All colors, spacing, radii, and typography are defined as CSS variables in `src/styles/themes.css`. **Never hardcode raw hex values or arbitrary Tailwind values (`text-[#123456]`) in components** — always reference a token. If a needed token doesn't exist, add it to the token file first, then use it.
 
+Arbitrary values are only acceptable for component-specific geometry or exact
+typographic precision (for example, a documented avatar size or line-height).
+Do not use arbitrary colors; add a semantic theme token instead. Keep focus,
+disabled, invalid, and placeholder styles aligned across form controls.
+
 ## Testing Conventions
 
 - Every component must have a test file covering: default render, all documented variants/props, and any interactive behavior (click, keyboard nav, disabled state).

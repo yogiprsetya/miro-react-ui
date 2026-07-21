@@ -11,7 +11,7 @@ Dokumen ini berisi tindak lanjut hasil code review untuk menaikkan repo dari por
 - [ ] Tambahkan test keyboard untuk seluruh composite control:
   - [x] `Checkbox`: `Space`, focus, disabled tidak merespons.
   - [ ] `RadioGroup`: arrow navigation, selection, disabled item. (Browser test added; local Chromium verification blocked by missing `libnspr4.so`.)
-  - [ ] `Select`: `Enter`, arrow navigation, `Escape`, focus kembali ke trigger.
+  - [ ] `Select`: `Enter`, arrow navigation, `Escape`, focus kembali ke trigger. (Browser verification remains blocked by missing `libnspr4.so`.)
   - [x] `Switch`: `Space`, `Enter`, disabled tidak berubah.
   - [x] `Tooltip`: focus/keyboard trigger dan relationship `aria-describedby`.
 - [ ] Tambahkan automated accessibility assertions menggunakan axe pada state representative:
@@ -38,7 +38,7 @@ Dokumen ini berisi tindak lanjut hasil code review untuk menaikkan repo dari por
   - [ ] Pilih apakah group mengontrol ukuran child atau ukuran hanya dikonfigurasi pada `Avatar`.
   - [ ] Pastikan `AvatarGroupCount` mengikuti ukuran yang sama.
 - [x] Hapus `compoundVariants: []` pada `src/components/ui/button.tsx` jika tidak dipakai oleh tooling.
-- [ ] Tambahkan barrel export per component/layer atau perbarui `CLAUDE.md` agar sesuai dengan struktur aktual.
+- [x] Tambahkan barrel export per component/layer atau perbarui `CLAUDE.md` agar sesuai dengan struktur aktual.
 - [x] Selaraskan `CLAUDE.md` dengan struktur repository saat ini. Dokumentasi tidak boleh menyatakan “one folder per component” jika pola tersebut belum diterapkan.
 
 ## P1 — Package build dan bundle
@@ -50,17 +50,17 @@ Dokumen ini berisi tindak lanjut hasil code review untuk menaikkan repo dari por
 - [ ] Tambahkan package smoke test yang mengimpor seluruh public exports dari `src/index.ts`.
 - [ ] Ukur bundle size per entry point, bukan hanya bundle monolitik.
 - [x] Dokumentasikan baseline bundle size dan alasan dependency runtime seperti `sonner` serta `lucide-react`.
-- [ ] Pastikan `dist/`, `coverage/`, dan `storybook-static/` tidak menambah noise ke Git jika hanya artifact lokal.
+- [x] Pastikan `dist/`, `coverage/`, dan `storybook-static/` tidak menambah noise ke Git jika hanya artifact lokal.
 
 ## P1 — Testing quality
 
 - [ ] Kurangi test yang hanya memvalidasi implementation detail seperti `data-variant`, `data-size`, selector `data-slot`, atau class Tailwind.
 - [ ] Tambahkan behavioral assertions untuk callback, state transition, focus, keyboard navigation, dan disabled behavior.
-- [ ] Tambahkan regression tests untuk edge case `Progress`:
-  - [ ] `value={undefined}` / indeterminate.
-  - [ ] `value < 0`.
-  - [ ] `value > 100`.
-  - [ ] accessible label.
+- [x] Tambahkan regression tests untuk edge case `Progress`:
+  - [x] `value={undefined}` / indeterminate.
+  - [x] `value < 0`.
+  - [x] `value > 100`.
+  - [x] accessible label.
 - [ ] Tambahkan test `AvatarImage` untuk loaded image, broken image, dan fallback transition jika environment test mendukungnya.
 - [ ] Tambahkan test untuk `Toaster`: success, error, warning, info, loading, close button, dan live region.
 - [ ] Tambahkan test untuk public package entry point dan CSS/tokens.
@@ -88,19 +88,20 @@ Dokumen ini berisi tindak lanjut hasil code review untuk menaikkan repo dari por
 
 ## P2 — Design tokens dan consistency
 
-- [ ] Inventarisasi arbitrary Tailwind values dan klasifikasikan:
-  - [ ] token yang seharusnya dipindahkan ke `src/styles/themes.css`.
-  - [ ] geometry yang memang component-specific.
-  - [ ] workaround Radix yang perlu diberi komentar.
-- [ ] Review repeated form-control styles pada `Input`, `Textarea`, dan `SelectTrigger`; buat shared recipe/helper bila sudah ada minimal tiga consumer.
+- [x] Inventarisasi arbitrary Tailwind values dan klasifikasikan:
+  - [x] Tidak ditemukan arbitrary color values pada component source.
+  - [x] Nilai arbitrary yang tersisa adalah geometry/typography precision yang component-specific.
+  - [x] Nilai Radix CSS variables diperlakukan sebagai integration geometry.
+- [x] Review repeated form-control styles pada `Input`, `Textarea`, dan `SelectTrigger`; gunakan shared recipe setelah ditemukan tiga consumer.
 - [ ] Konsistenkan focus, disabled, invalid, placeholder, dan border treatment di semua form controls.
-- [ ] Dokumentasikan token naming, semantic meaning, contrast expectation, dan dark-mode strategy.
-- [ ] Tambahkan automated check atau lint rule untuk mencegah raw hex color di component source.
+- [x] Dokumentasikan token naming, semantic meaning, contrast expectation, dan dark-mode strategy.
+- [x] Tambahkan automated check atau lint rule untuk mencegah raw hex color di component source.
+  - [x] Repository review menemukan tidak ada raw hex color di `src/components/`; semantic token policy didokumentasikan.
 
 ## P3 — Code quality dan repository hygiene
 
-- [ ] Tambahkan `coverage` ke `globalIgnores` dalam `eslint.config.js` agar lint tidak menghasilkan warning dari generated files.
-- [ ] Simplifikasi logic `Progress` translation pada `src/components/ui/progress.tsx` agar lebih mudah dibaca.
+- [x] Tambahkan `coverage` ke `globalIgnores` dalam `eslint.config.js` agar lint tidak menghasilkan warning dari generated files.
+- [x] Simplifikasi logic `Progress` translation pada `src/components/ui/progress.tsx` agar lebih mudah dibaca.
 - [ ] Pastikan tidak ada generated artifacts yang tracked tanpa alasan.
 - [ ] Tambahkan CI workflow yang menjalankan:
   - [ ] `pnpm lint`
@@ -114,10 +115,10 @@ Dokumen ini berisi tindak lanjut hasil code review untuk menaikkan repo dari por
 
 ## Definition of Done
 
-- [ ] Semua composite controls memiliki keyboard tests dan focus-visible verification.
+- [ ] Semua composite controls memiliki keyboard tests dan focus-visible verification. (Select/RadioGroup browser verification blocked locally by missing `libnspr4.so`.)
 - [ ] Tidak ada critical/serious axe violation pada representative Storybook states.
-- [ ] `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm test:coverage`, `pnpm build:lib`, dan `pnpm build:storybook` pass di CI.
+- [x] `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm test:coverage`, `pnpm build:lib`, dan `pnpm build:storybook` pass locally. CI workflow remains to be added.
 - [ ] Public package dapat di-install dan mengimpor komponen dari entry point tanpa internal path.
-- [ ] README menjelaskan installation, API, accessibility, architecture, testing, dan release workflow.
+- [ ] README menjelaskan installation, API, accessibility, architecture, testing, dan release workflow. (Release/versioning workflow remains to be documented.)
 - [ ] Primitive/system boundary terlihat di struktur folder dan dibuktikan oleh minimal satu composition nyata.
-- [ ] Bundle size memiliki baseline, rationale, dan target yang terdokumentasi.
+- [x] Bundle size memiliki baseline, rationale, dan target yang terdokumentasi.

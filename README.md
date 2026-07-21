@@ -97,10 +97,9 @@ components keep APIs close to their underlying primitive and remain broadly
 composable.
 
 Opinionated, multi-control compositions belong in `src/components/system/`.
-That directory is intentionally reserved until a real composition needs it;
-moving every current control there would blur the primitive boundary without
-providing a consumer benefit. This keeps the repository's current structure
-simple while making the future separation explicit.
+The current example is `Field`, which composes labels, descriptions, errors,
+and a control without changing the underlying primitive APIs. Existing
+single-control wrappers remain in `src/components/ui/`.
 
 ## Usage
 
@@ -139,7 +138,9 @@ consumed through Tailwind classes. Components should reference tokens such as
 
 When adding a repeated visual value, add a token first. One-off geometry values
 may remain local when they describe a component-specific control size, but the
-decision should be visible in the component variant definition.
+decision should be visible in the component variant definition. Arbitrary
+values are reserved for component geometry or typography precision; colors
+must always use semantic theme tokens.
 
 ## Accessibility
 
@@ -172,6 +173,7 @@ components are added.
 | `pnpm test:coverage`   | Run tests with V8 coverage      |
 | `pnpm lint`            | Run ESLint                      |
 | `pnpm typecheck`       | Run TypeScript validation       |
+| `pnpm build:lib`       | Build package JavaScript, CSS, and declarations |
 
 ## Testing strategy
 

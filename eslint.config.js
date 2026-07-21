@@ -9,7 +9,19 @@ import tseslint from 'typescript-eslint';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
-  globalIgnores(['dist', 'public', 'storybook-static']),
+  globalIgnores(['coverage', 'dist', 'public', 'storybook-static']),
+  {
+    files: ['src/components/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'Literal[value=/^#[0-9a-fA-F]{3,8}$/]',
+          message: 'Use a semantic design token instead of a raw hex color.',
+        },
+      ],
+    },
+  },
   {
     files: ['**/*.{ts,tsx}'],
     extends: [

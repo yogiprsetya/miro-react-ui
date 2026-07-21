@@ -11,7 +11,7 @@ function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
         'w-full min-w-0 rounded-lg px-3 py-2 text-base transition-colors outline-none disabled:pointer-events-none disabled:cursor-not-allowed',
         'bg-neutral-50 disabled:bg-neutral-200 disabled:text-neutral-600',
         'text-neutral-900 placeholder:text-neutral-700',
-        'focus-visible:border-primary-600 focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-1 aria-invalid:border-error-500 border border-neutral-500',
+        'focus-visible:border-primary-600 focus-visible:ring-focus aria-invalid:border-error-500 border border-neutral-500 focus-visible:ring-2 focus-visible:ring-offset-1',
         className
       )}
       {...props}

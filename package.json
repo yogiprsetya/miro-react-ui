@@ -1,6 +1,6 @@
 {
   "name": "miro-react-ui",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -8,13 +8,36 @@
     "storybook": "storybook dev -p 6006",
     "build": "storybook build",
     "build:storybook": "storybook build",
-    "build:lib": "vite build --config vite.lib.config.ts",
+    "build:lib": "tsc -p tsconfig.lib.json && vite build --config vite.lib.config.ts",
     "test": "vitest run --project unit",
     "test:coverage": "vitest run --project unit --coverage",
     "typecheck": "tsc -p tsconfig.app.json --noEmit",
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "peerDependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.24.0",
+    "radix-ui": "^1.6.2",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.6.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/miro-react-ui.js"
+    },
+    "./styles.css": "./dist/miro-react-ui.css",
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/types/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "dependencies": {
     "@tailwindcss/vite": "^4.3.2",
     "class-variance-authority": "^0.7.1",
@@ -74,8 +97,8 @@
     "msw-storybook-addon": "^2.0.7",
     "playwright": "^1.61.1",
     "prettier": "^3.9.5",
-    "storybook": "^10.5.0",
     "shadcn": "^4.13.0",
+    "storybook": "^10.5.0",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.62.0",
     "vite": "^8.1.1",
