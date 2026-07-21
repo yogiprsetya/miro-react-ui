@@ -88,3 +88,23 @@ export const KeyboardNavigation: Story = {
     await expect(compact).toHaveAttribute('data-state', 'checked');
   },
 };
+
+export const KeyboardSkipsDisabled: Story = {
+  render: () => (
+    <RadioGroup defaultValue="board" aria-label="View mode">
+      <RadioGroupItem value="board" aria-label="Board view" />
+      <RadioGroupItem value="list" aria-label="List view" disabled />
+      <RadioGroupItem value="timeline" aria-label="Timeline view" />
+    </RadioGroup>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const board = canvas.getByRole('radio', { name: 'Board view' });
+    const timeline = canvas.getByRole('radio', { name: 'Timeline view' });
+
+    board.focus();
+    await userEvent.keyboard('{ArrowDown}');
+
+    await expect(timeline).toHaveAttribute('data-state', 'checked');
+  },
+};

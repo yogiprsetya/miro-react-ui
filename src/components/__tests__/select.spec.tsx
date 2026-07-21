@@ -106,6 +106,20 @@ describe('Select', () => {
     expect(trigger).toHaveTextContent('Editor');
   });
 
+  it('closes with Escape and returns focus to the trigger', async () => {
+    const user = userEvent.setup();
+    renderSelect();
+
+    const trigger = screen.getByRole('combobox', { name: 'Choose a role' });
+    await user.click(trigger);
+    expect(await screen.findByRole('listbox')).toBeInTheDocument();
+
+    await user.keyboard('{Escape}');
+
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
+  });
+
   it('supports controlled value', () => {
     const { rerender } = renderSelect({ value: 'viewer' });
 

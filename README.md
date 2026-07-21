@@ -130,6 +130,12 @@ or nested interactive controls:
 </Button>
 ```
 
+`Button asChild` does not add native disabled behavior to an anchor. If a link
+must be unavailable, render it conditionally or provide link-specific behavior
+such as `aria-disabled`, event prevention, and removal of its `href`.
+`ButtonLink` is intentionally not provided because these link semantics belong
+to the consuming application.
+
 ## Design tokens
 
 Colors and shared visual values are defined in `src/styles/themes.css` and
@@ -157,6 +163,9 @@ must always use semantic theme tokens.
 - Compose form controls with `Field`, `FieldLabel`, `FieldDescription`, and
   `FieldError`. Give the control an `id`, point the label's `htmlFor` to it, and
   reference description/error IDs through `aria-describedby`.
+- `Field` is intentionally a layout/composition primitive. It does not generate
+  IDs or mutate a child control's `aria-describedby`; this keeps composition
+  explicit and supports controls implemented outside this library.
 
 The Storybook configuration includes `@storybook/addon-a11y` for manual and
 automated accessibility checks. Component tests cover semantic roles and key
@@ -165,14 +174,14 @@ components are added.
 
 ## Verification commands
 
-| Command                | Purpose                         |
-| ---------------------- | ------------------------------- |
-| `pnpm storybook`       | Start Storybook locally         |
-| `pnpm build:storybook` | Build the static Storybook site |
-| `pnpm test`            | Run unit/component tests        |
-| `pnpm test:coverage`   | Run tests with V8 coverage      |
-| `pnpm lint`            | Run ESLint                      |
-| `pnpm typecheck`       | Run TypeScript validation       |
+| Command                | Purpose                                         |
+| ---------------------- | ----------------------------------------------- |
+| `pnpm storybook`       | Start Storybook locally                         |
+| `pnpm build:storybook` | Build the static Storybook site                 |
+| `pnpm test`            | Run unit/component tests                        |
+| `pnpm test:coverage`   | Run tests with V8 coverage                      |
+| `pnpm lint`            | Run ESLint                                      |
+| `pnpm typecheck`       | Run TypeScript validation                       |
 | `pnpm build:lib`       | Build package JavaScript, CSS, and declarations |
 
 ## Testing strategy

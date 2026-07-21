@@ -42,4 +42,17 @@ describe('Button', () => {
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute('href', '/issues/new');
   });
+
+  it('does not provide native disabled behavior when composing an anchor', () => {
+    render(
+      <Button asChild disabled>
+        <a href="/issues/new">Create via link</a>
+      </Button>
+    );
+
+    const link = screen.getByRole('link', { name: 'Create via link' });
+
+    expect(link).not.toBeDisabled();
+    expect(link).toHaveAttribute('disabled');
+  });
 });
