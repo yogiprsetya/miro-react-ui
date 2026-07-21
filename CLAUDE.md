@@ -57,7 +57,9 @@ npx shadcn@latest add [component-name]
 ```
 src/
 ├── components/
-│   ├── ui/              # shadcn primitives (button, input, dialog, etc.)
+│   ├── ui/              # low-level primitives and styled controls
+│   │   └── [component-name].tsx
+│   ├── system/          # opinionated compositions built from primitives
 │   │   └── [component-name].tsx
 │   ├── stories/
 │   │   └── [component-name].story.tsx
@@ -73,10 +75,16 @@ src/
 
 **Component pattern to follow for every new component:**
 
-- One folder per component under `src/components/`
-- Export through an `index.ts` barrel file
+- Put low-level reusable controls in `src/components/ui/`.
+- Put opinionated multi-control compositions in `src/components/system/`.
+- Export public components through `src/index.ts`; use layer barrels internally.
 - Props typed explicitly with a documented TypeScript interface (no `any`)
 - Variants driven by `class-variance-authority` (cva) pattern, consistent with shadcn conventions
+
+Dependency direction is one-way: `ui` primitives may be composed by `system`
+components, and consumers import from the public package entry point. A system
+component owns layout and policy; it should not make primitive consumers depend
+on the system layer.
 
 ## Design Tokens
 

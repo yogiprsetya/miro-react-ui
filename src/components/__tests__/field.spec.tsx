@@ -5,7 +5,7 @@ import {
   FieldDescription,
   FieldError,
   FieldLabel,
-} from '~/components/ui/field';
+} from '~/components/system/field';
 import { Input } from '~/components/ui/input';
 
 describe('Field', () => {
@@ -21,7 +21,9 @@ describe('Field', () => {
         <FieldDescription id="email-description">
           We will not share your email.
         </FieldDescription>
-        <FieldError id="email-error">Enter a valid email address.</FieldError>
+        <FieldError id="email-error" announce>
+          Enter a valid email address.
+        </FieldError>
       </Field>
     );
 
@@ -41,5 +43,12 @@ describe('Field', () => {
       'data-orientation',
       'horizontal'
     );
+  });
+
+  it('does not announce errors assertively unless requested', () => {
+    render(<FieldError>Optional validation message</FieldError>);
+
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    expect(screen.getByText('Optional validation message')).toBeInTheDocument();
   });
 });

@@ -20,6 +20,11 @@ describe('Progress', () => {
   it('translates the indicator based on value', () => {
     const { container } = render(<Progress value={75} />);
 
+    const root = screen.getByRole('progressbar');
+    expect(root).toHaveAttribute('aria-valuenow', '75');
+    expect(root).toHaveAttribute('aria-valuemin', '0');
+    expect(root).toHaveAttribute('aria-valuemax', '100');
+
     const indicator = container.querySelector(
       '[data-slot="progress-indicator"]'
     );
@@ -39,7 +44,13 @@ describe('Progress', () => {
   });
 
   it('renders at 0% when value is not provided', () => {
-    const { container } = render(<Progress />);
+    const { container } = render(
+      <Progress aria-label="Upload progress" />
+    );
+
+    const root = screen.getByRole('progressbar', { name: 'Upload progress' });
+    expect(root).toHaveAttribute('data-state', 'indeterminate');
+    expect(root).not.toHaveAttribute('aria-valuenow');
 
     const indicator = container.querySelector(
       '[data-slot="progress-indicator"]'

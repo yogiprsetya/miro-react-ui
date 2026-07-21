@@ -84,6 +84,14 @@ export const Error: Story = {
   render: (args) => <ToastTrigger {...args} variant="error" />,
 };
 
+export const Default: Story = {
+  render: (args) => <ToastTrigger {...args} variant="default" />,
+};
+
+export const Loading: Story = {
+  render: (args) => <ToastTrigger {...args} variant="loading" />,
+};
+
 export const Info: Story = {
   render: (args) => <ToastTrigger {...args} variant="info" />,
 };

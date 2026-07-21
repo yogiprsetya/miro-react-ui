@@ -1,3 +1,5 @@
+import './styles/index.css';
+
 export {
   Avatar,
   AvatarBadge,
@@ -11,7 +13,7 @@ export {
   FieldDescription,
   FieldError,
   FieldLabel,
-} from './components/ui/field';
+} from './components/system';
 export { Badge, badgeVariants } from './components/ui/badge';
 export { Button } from './components/ui/button';
 export { Checkbox } from './components/ui/checkbox';

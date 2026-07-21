@@ -13,7 +13,7 @@ function Switch({ className, size = 'md', ...props }: SwitchProps) {
       data-slot="switch"
       data-size={size}
       className={cn(
-        'relative inline-flex shrink-0 items-center rounded-full border border-transparent transition-all outline-none after:absolute',
+        'focus-visible:ring-focus relative inline-flex shrink-0 items-center rounded-full border border-transparent transition-all outline-none after:absolute focus-visible:ring-2 focus-visible:ring-offset-2',
         'after:-inset-x-3 after:-inset-y-2',
         'enabled:data-[state=checked]:bg-primary-600 enabled:data-[state=checked]:hover:bg-primary-700',
         'enabled:data-[state=unchecked]:bg-neutral-400 enabled:data-[state=unchecked]:hover:bg-neutral-500',

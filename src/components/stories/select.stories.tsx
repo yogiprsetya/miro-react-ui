@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent, within } from 'storybook/test';
+import { useId } from 'react';
 import {
   Select,
   SelectContent,
@@ -45,15 +47,16 @@ function SelectDemo(
   }
 ) {
   const { placeholder = 'Select a role', label, ...selectProps } = props;
+  const selectId = useId();
 
   return (
     <Select {...selectProps}>
       {label ? (
-        <Label htmlFor="story-select" className="mb-1 block">
+        <Label htmlFor={selectId} className="mb-1 block">
           {label}
         </Label>
       ) : null}
-      <SelectTrigger id="story-select" className="w-72">
+      <SelectTrigger id={selectId} className="w-72">
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
@@ -131,9 +134,24 @@ export const Invalid: Story = {
         value={undefined}
         defaultValue={undefined}
       />
-      <p id="invalid-select-error" className="text-sm text-error-600">
+      <p id="invalid-select-error" className="text-error-600 text-sm">
         Select a team role.
       </p>
     </div>
   ),
+};
+
+export const KeyboardInteraction: Story = {
+  render: (args) => <SelectDemo {...args} label="Keyboard-selectable role" />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const trigger = canvas.getByRole('combobox', {
+      name: 'Keyboard-selectable role',
+    });
+
+    await userEvent.click(trigger);
+    await userEvent.keyboard('{ArrowDown}{Enter}');
+
+    await expect(trigger).toHaveTextContent('Editor');
+  },
 };

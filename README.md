@@ -34,8 +34,32 @@ component tests.
   contract.
 - Make trade-offs visible rather than hiding them behind a large abstraction.
 
-This repository is intentionally focused on foundational components. It is not
-yet a complete application framework or a published npm package.
+This repository is intentionally focused on foundational components. The
+library build emits ESM, CSS tokens, and TypeScript declarations for package
+consumers.
+
+## Package usage
+
+```bash
+pnpm add miro-react-ui react react-dom
+```
+
+Import the public API and stylesheet; consumers should not import files from
+`src/` or `dist/` directly:
+
+```tsx
+import { Button } from 'miro-react-ui';
+import 'miro-react-ui/styles.css';
+```
+
+Build artifacts are generated with `pnpm build:lib`:
+
+- `dist/miro-react-ui.js` — ESM component bundle, approximately 28.7 kB raw / 7.4 kB gzip.
+- `dist/miro-react-ui.css` — Tailwind and design-token stylesheet, approximately 34.4 kB raw / 6.7 kB gzip.
+- `dist/types/index.d.ts` — public TypeScript declarations.
+
+Runtime libraries are externalized and declared as peer dependencies so
+applications control their React, Radix, icon, toast, and styling versions.
 
 ## Component inventory
 

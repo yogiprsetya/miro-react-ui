@@ -2,6 +2,10 @@ import * as React from 'react';
 
 import { cn } from '~/lib/utils';
 
+/**
+ * Layout primitive for composing a label, control, description, and error.
+ * Consumers own the control IDs and `aria-describedby` association.
+ */
 interface FieldProps extends React.ComponentProps<'div'> {
   orientation?: 'vertical' | 'horizontal';
 }
@@ -41,10 +45,19 @@ function FieldDescription({ className, ...props }: React.ComponentProps<'p'>) {
   );
 }
 
-function FieldError({ className, ...props }: React.ComponentProps<'p'>) {
+interface FieldErrorProps extends React.ComponentProps<'p'> {
+  /** Add alert semantics when the error should be announced immediately. */
+  announce?: boolean;
+}
+
+function FieldError({
+  announce = false,
+  className,
+  ...props
+}: FieldErrorProps) {
   return (
     <p
-      role="alert"
+      {...(announce ? { role: 'alert' } : {})}
       data-slot="field-error"
       className={cn('text-error-600 text-sm', className)}
       {...props}
@@ -52,5 +65,5 @@ function FieldError({ className, ...props }: React.ComponentProps<'p'>) {
   );
 }
 
-export type { FieldProps };
+export type { FieldErrorProps, FieldProps };
 export { Field, FieldDescription, FieldError, FieldLabel };

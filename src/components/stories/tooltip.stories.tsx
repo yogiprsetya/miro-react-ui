@@ -97,3 +97,26 @@ export const WithDescription: Story = {
     </Tooltip>
   ),
 };
+
+export const Focus: Story = {
+  render: (args) => (
+    <Tooltip>
+      <TooltipTrigger>Focus for help</TooltipTrigger>
+      <TooltipContent {...args}>
+        Shown when the trigger receives focus.
+      </TooltipContent>
+    </Tooltip>
+  ),
+};
+
+export const LongContent: Story = {
+  render: (args) => (
+    <Tooltip>
+      <TooltipTrigger>Long guidance</TooltipTrigger>
+      <TooltipContent {...args} className="max-w-64">
+        Use this guidance when a control needs concise supporting context
+        without adding persistent layout content.
+      </TooltipContent>
+    </Tooltip>
+  ),
+};

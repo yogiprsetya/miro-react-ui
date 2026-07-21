@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { Checkbox } from '~/components/ui/checkbox';
 
@@ -41,5 +42,16 @@ describe('Checkbox', () => {
     expect(
       screen.getByRole('checkbox', { name: 'Archive board' })
     ).toBeDisabled();
+  });
+
+  it('toggles with the keyboard when focused', async () => {
+    const user = userEvent.setup();
+    render(<Checkbox aria-label="Keyboard terms" />);
+
+    const checkbox = screen.getByRole('checkbox', { name: 'Keyboard terms' });
+    checkbox.focus();
+    await user.keyboard(' ');
+
+    expect(checkbox).toHaveAttribute('data-state', 'checked');
   });
 });

@@ -31,6 +31,9 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const fixtureAvatar =
+  'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 96 96%22%3E%3Crect width=%2296%22 height=%2296%22 fill=%22%230169cd%22/%3E%3Ccircle cx=%2248%22 cy=%2236%22 r=%2218%22 fill=%22%23eff8ff%22/%3E%3Cpath d=%22M18 86c4-20 16-30 30-30s26 10 30 30%22 fill=%22%23eff8ff%22/%3E%3C/svg%3E';
+
 export const Default: Story = {
   render: (args) => (
     <Avatar {...args}>
@@ -42,10 +45,7 @@ export const Default: Story = {
 export const WithImage: Story = {
   render: (args) => (
     <Avatar {...args}>
-      <AvatarImage
-        src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-        alt="Jane Doe"
-      />
+      <AvatarImage src={fixtureAvatar} alt="Jane Doe" />
       <AvatarFallback>JD</AvatarFallback>
     </Avatar>
   ),
@@ -90,10 +90,7 @@ export const Size96: Story = {
 export const WithBadge: Story = {
   render: (args) => (
     <Avatar {...args}>
-      <AvatarImage
-        src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-        alt="Online user"
-      />
+      <AvatarImage src={fixtureAvatar} alt="Online user" />
       <AvatarFallback>JD</AvatarFallback>
       <AvatarBadge />
     </Avatar>
@@ -104,24 +101,15 @@ export const Group: Story = {
   render: () => (
     <AvatarGroup>
       <Avatar>
-        <AvatarImage
-          src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-          alt="User 1"
-        />
+        <AvatarImage src={fixtureAvatar} alt="User 1" />
         <AvatarFallback>U1</AvatarFallback>
       </Avatar>
       <Avatar>
-        <AvatarImage
-          src="https://i.pravatar.cc/150?u=a042581f4e29026704e"
-          alt="User 2"
-        />
+        <AvatarImage src={fixtureAvatar} alt="User 2" />
         <AvatarFallback>U2</AvatarFallback>
       </Avatar>
       <Avatar>
-        <AvatarImage
-          src="https://i.pravatar.cc/150?u=a042581f4e29026704f"
-          alt="User 3"
-        />
+        <AvatarImage src={fixtureAvatar} alt="User 3" />
         <AvatarFallback>U3</AvatarFallback>
       </Avatar>
       <AvatarGroupCount>+5</AvatarGroupCount>

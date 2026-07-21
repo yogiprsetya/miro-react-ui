@@ -9,15 +9,19 @@ function Progress({
 }: React.ComponentProps<typeof ProgressPrimitive.Root>) {
   const clampedValue = Math.min(100, Math.max(0, value ?? 0));
   const translation = clampedValue === 100 ? 0 : 100 - clampedValue;
+  const ariaValueNow = value === undefined ? undefined : clampedValue;
 
   return (
     <ProgressPrimitive.Root
+      {...props}
       data-slot="progress"
       className={cn(
         'relative flex h-2 w-full items-center overflow-x-hidden rounded-full bg-neutral-300',
         className
       )}
-      {...props}
+      aria-valuemin={props['aria-valuemin'] ?? 0}
+      aria-valuemax={props['aria-valuemax'] ?? 100}
+      aria-valuenow={props['aria-valuenow'] ?? ariaValueNow}
     >
       <ProgressPrimitive.Indicator
         data-slot="progress-indicator"

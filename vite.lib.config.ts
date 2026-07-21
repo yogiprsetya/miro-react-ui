@@ -14,13 +14,23 @@ export default defineConfig({
     },
   },
   build: {
+    emptyOutDir: false,
     lib: {
       entry: path.resolve(dirname, 'src/index.ts'),
       formats: ['es'],
       fileName: 'miro-react-ui',
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: [
+        'react',
+        'react-dom',
+        'class-variance-authority',
+        'clsx',
+        'lucide-react',
+        'radix-ui',
+        'sonner',
+        'tailwind-merge',
+      ],
     },
   },
 });

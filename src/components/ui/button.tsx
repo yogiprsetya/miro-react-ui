@@ -23,7 +23,6 @@ const buttonVariants = cva(
       variant: 'solid',
       size: 'md',
     },
-    compoundVariants: [],
   }
 );
 

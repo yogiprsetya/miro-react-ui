@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 import { Switch } from '~/components/ui/switch';
 
@@ -54,5 +55,18 @@ describe('Switch', () => {
     render(<Switch aria-label="Focus mode" disabled />);
 
     expect(screen.getByRole('switch', { name: 'Focus mode' })).toBeDisabled();
+  });
+
+  it('toggles with Space when focused', async () => {
+    const user = userEvent.setup();
+    render(<Switch aria-label="Keyboard focus mode" />);
+
+    const switchControl = screen.getByRole('switch', {
+      name: 'Keyboard focus mode',
+    });
+    switchControl.focus();
+    await user.keyboard(' ');
+
+    expect(switchControl).toHaveAttribute('data-state', 'checked');
   });
 });

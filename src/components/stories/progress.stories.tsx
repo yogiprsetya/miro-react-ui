@@ -31,6 +31,27 @@ export const Empty: Story = {
   },
 };
 
+export const Indeterminate: Story = {
+  args: {
+    value: undefined,
+    'aria-label': 'Uploading board export',
+  },
+};
+
+export const AccessibleLabel: Story = {
+  args: {
+    value: 60,
+    'aria-label': 'Board export progress',
+  },
+};
+
+export const OutOfRangeInput: Story = {
+  args: {
+    value: 120,
+    'aria-label': 'Clamped progress example',
+  },
+};
+
 export const Full: Story = {
   args: {
     value: 100,

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent, within } from 'storybook/test';
 import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group';
 
 /**
@@ -67,4 +68,23 @@ export const Large: Story = {
 
 export const Disabled: Story = {
   render: (args) => <RadioGroupPreview {...args} disabled />,
+};
+
+export const KeyboardNavigation: Story = {
+  render: () => (
+    <RadioGroup defaultValue="comfortable" aria-label="Density">
+      <RadioGroupItem value="comfortable" aria-label="Comfortable" />
+      <RadioGroupItem value="compact" aria-label="Compact" />
+    </RadioGroup>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const comfortable = canvas.getByRole('radio', { name: 'Comfortable' });
+    const compact = canvas.getByRole('radio', { name: 'Compact' });
+
+    comfortable.focus();
+    await userEvent.keyboard('{ArrowDown}');
+
+    await expect(compact).toHaveAttribute('data-state', 'checked');
+  },
 };
