@@ -20,6 +20,9 @@ If you are developing a production application, we recommend updating the config
 ````js
 # Miro React UI
 
+[![CI](https://github.com/yogiprsetya/miro-react-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/yogiprsetya/miro-react-ui/actions/workflows/ci.yml)
+[![Coverage](https://codecov.io/gh/yogiprsetya/miro-react-ui/branch/master/graph/badge.svg)](https://codecov.io/gh/yogiprsetya/miro-react-ui)
+
 Miro React UI is a small, accessible React design system built as a portfolio
 project. It demonstrates reusable component APIs, token-driven styling,
 Radix-based interaction primitives, Storybook documentation, and behavior-first
