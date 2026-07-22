@@ -4,30 +4,22 @@ import { Progress } from '~/components/ui/progress';
 
 describe('Progress', () => {
   it('renders a progressbar with default structure', () => {
-    const { container } = render(<Progress />);
+    render(<Progress />);
 
-    const root = container.querySelector('[data-slot="progress"]');
+    const root = screen.getByRole('progressbar');
     expect(root).toBeInTheDocument();
-    expect(root).toHaveAttribute('role', 'progressbar');
     expect(root).toHaveAttribute('data-state', 'indeterminate');
-
-    const indicator = container.querySelector(
-      '[data-slot="progress-indicator"]'
-    );
-    expect(indicator).toBeInTheDocument();
   });
 
   it('translates the indicator based on value', () => {
-    const { container } = render(<Progress value={75} />);
+    render(<Progress value={75} />);
 
     const root = screen.getByRole('progressbar');
     expect(root).toHaveAttribute('aria-valuenow', '75');
     expect(root).toHaveAttribute('aria-valuemin', '0');
     expect(root).toHaveAttribute('aria-valuemax', '100');
 
-    const indicator = container.querySelector(
-      '[data-slot="progress-indicator"]'
-    );
+    const indicator = root.firstElementChild;
     expect(indicator).toHaveStyle({ transform: 'translateX(-25%)' });
   });
 
@@ -35,26 +27,20 @@ describe('Progress', () => {
     [-20, 'translateX(-100%)'],
     [120, 'translateX(0%)'],
   ])('clamps value %i to the valid range', (value, transform) => {
-    const { container } = render(<Progress value={value} />);
+    render(<Progress value={value} />);
 
-    const indicator = container.querySelector(
-      '[data-slot="progress-indicator"]'
-    );
+    const indicator = screen.getByRole('progressbar').firstElementChild;
     expect(indicator).toHaveStyle({ transform });
   });
 
   it('renders at 0% when value is not provided', () => {
-    const { container } = render(
-      <Progress aria-label="Upload progress" />
-    );
+    render(<Progress aria-label="Upload progress" />);
 
     const root = screen.getByRole('progressbar', { name: 'Upload progress' });
     expect(root).toHaveAttribute('data-state', 'indeterminate');
     expect(root).not.toHaveAttribute('aria-valuenow');
 
-    const indicator = container.querySelector(
-      '[data-slot="progress-indicator"]'
-    );
+    const indicator = root.firstElementChild;
     expect(indicator).toHaveStyle({ transform: 'translateX(-100%)' });
   });
 

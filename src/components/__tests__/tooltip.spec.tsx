@@ -9,7 +9,7 @@ import {
 } from '~/components/ui/tooltip';
 
 describe('Tooltip', () => {
-  it('renders the trigger with correct data-slot and as a button', () => {
+  it('renders the trigger as a button', () => {
     render(
       <TooltipProvider>
         <Tooltip>
@@ -22,7 +22,6 @@ describe('Tooltip', () => {
     const trigger = screen.getByRole('button', { name: 'Hover me' });
     expect(trigger).toBeInTheDocument();
     expect(trigger.tagName).toBe('BUTTON');
-    expect(trigger).toHaveAttribute('data-slot', 'tooltip-trigger');
   });
 
   it('forwards ref on the trigger', () => {

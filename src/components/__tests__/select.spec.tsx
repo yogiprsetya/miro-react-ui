@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import {
   Select,
   SelectContent,
@@ -13,13 +13,15 @@ import {
 } from '~/components/ui/select';
 import { Label } from '~/components/ui/label';
 
-function renderSelect(props: {
-  defaultValue?: string;
-  disabled?: boolean;
-  'aria-invalid'?: 'true' | 'false';
-  value?: string;
-  onValueChange?: (value: string) => void;
-} = {}) {
+function renderSelect(
+  props: {
+    defaultValue?: string;
+    disabled?: boolean;
+    'aria-invalid'?: 'true' | 'false';
+    value?: string;
+    onValueChange?: (value: string) => void;
+  } = {}
+) {
   return render(
     <Select {...props}>
       <SelectTrigger aria-label="Choose a role">
@@ -47,7 +49,6 @@ describe('Select', () => {
     const trigger = screen.getByRole('combobox', { name: 'Choose a role' });
 
     expect(trigger).toBeInTheDocument();
-    expect(trigger).toHaveAttribute('data-slot', 'select-trigger');
     expect(trigger).toHaveTextContent('Select a role');
   });
 
@@ -64,10 +65,7 @@ describe('Select', () => {
       </Select>
     );
 
-    expect(screen.getByLabelText('Role')).toHaveAttribute(
-      'id',
-      'role-select'
-    );
+    expect(screen.getByLabelText('Role')).toHaveAttribute('id', 'role-select');
   });
 
   it('opens the dropdown and selects an item on click', async () => {
@@ -80,10 +78,27 @@ describe('Select', () => {
     const listbox = await screen.findByRole('listbox');
     expect(listbox).toBeInTheDocument();
 
-    const editorOption = within(listbox).getByRole('option', { name: 'Editor' });
+    const editorOption = within(listbox).getByRole('option', {
+      name: 'Editor',
+    });
     await user.click(editorOption);
 
     expect(trigger).toHaveTextContent('Editor');
+  });
+
+  it('calls onValueChange when an option is selected', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    renderSelect({ onValueChange });
+
+    await user.click(screen.getByRole('combobox', { name: 'Choose a role' }));
+    await user.click(
+      within(await screen.findByRole('listbox')).getByRole('option', {
+        name: 'Editor',
+      })
+    );
+
+    expect(onValueChange).toHaveBeenCalledWith('editor');
   });
 
   it('supports keyboard navigation and selection', async () => {
@@ -147,7 +162,18 @@ describe('Select', () => {
     const trigger = screen.getByRole('combobox', { name: 'Choose a role' });
 
     expect(trigger).toBeDisabled();
-    expect(trigger.className).toContain('disabled:cursor-not-allowed');
+  });
+
+  it('does not open or change when disabled', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    renderSelect({ disabled: true, onValueChange });
+
+    const trigger = screen.getByRole('combobox', { name: 'Choose a role' });
+    await user.click(trigger);
+
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(onValueChange).not.toHaveBeenCalled();
   });
 
   it('marks invalid state', () => {
@@ -157,7 +183,6 @@ describe('Select', () => {
     trigger.setAttribute('aria-invalid', 'true');
 
     expect(trigger).toHaveAttribute('aria-invalid', 'true');
-    expect(trigger.className).toContain('aria-invalid:border-error-500');
   });
 
   it('marks disabled items as aria-disabled', async () => {

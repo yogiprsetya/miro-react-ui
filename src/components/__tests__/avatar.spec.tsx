@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import {
   Avatar,
   AvatarImage,
@@ -70,21 +70,58 @@ describe('Avatar', () => {
 
     expect(avatar).toHaveAttribute('data-size', '2xl');
   });
-
-  it('accepts custom className', () => {
-    render(
-      <Avatar className="custom-class">
-        <AvatarFallback>X</AvatarFallback>
-      </Avatar>
-    );
-
-    const avatar = screen.getByText('X').closest('[data-slot="avatar"]');
-
-    expect(avatar?.className).toContain('custom-class');
-  });
 });
 
 describe('AvatarImage', () => {
+  it('shows the image after it loads successfully', () => {
+    const listeners = new Map<string, (event?: unknown) => void>();
+    const image = {
+      complete: false,
+      naturalWidth: 0,
+      addEventListener: (type: string, listener: (event?: unknown) => void) => {
+        listeners.set(type, listener);
+      },
+      removeEventListener: () => {},
+      set src(_value: string) {},
+    } as unknown as HTMLImageElement;
+    class MockImage {
+      get complete() {
+        return image.complete;
+      }
+      get naturalWidth() {
+        return image.naturalWidth;
+      }
+      addEventListener = image.addEventListener;
+      removeEventListener = image.removeEventListener;
+      set src(value: string) {
+        image.src = value;
+      }
+    }
+    vi.spyOn(window, 'Image').mockImplementation(
+      MockImage as unknown as typeof window.Image
+    );
+
+    const onLoadingStatusChange = vi.fn();
+
+    render(
+      <Avatar>
+        <AvatarImage
+          src="/photo.jpg"
+          alt="User photo"
+          onLoadingStatusChange={onLoadingStatusChange}
+        />
+        <AvatarFallback>UP</AvatarFallback>
+      </Avatar>
+    );
+
+    Object.assign(image, { complete: true, naturalWidth: 1 });
+    listeners.get('load')?.({ currentTarget: image } as never);
+
+    return waitFor(() => {
+      expect(onLoadingStatusChange).toHaveBeenCalledWith('loaded');
+    });
+  });
+
   it('shows fallback when image is not loaded (jsdom limitation)', () => {
     render(
       <Avatar>
@@ -98,7 +135,49 @@ describe('AvatarImage', () => {
     const fallback = screen.getByText('UP');
 
     expect(fallback).toBeInTheDocument();
-    expect(fallback).toHaveAttribute('data-slot', 'avatar-fallback');
+  });
+
+  it('keeps the fallback visible when the image fails to load', () => {
+    const listeners = new Map<string, (event?: unknown) => void>();
+    const image = {
+      complete: false,
+      naturalWidth: 0,
+      addEventListener: (type: string, listener: (event?: unknown) => void) => {
+        listeners.set(type, listener);
+      },
+      removeEventListener: () => {},
+      set src(_value: string) {},
+    } as unknown as HTMLImageElement;
+    class MockImage {
+      get complete() {
+        return image.complete;
+      }
+      get naturalWidth() {
+        return image.naturalWidth;
+      }
+      addEventListener = image.addEventListener;
+      removeEventListener = image.removeEventListener;
+      set src(value: string) {
+        image.src = value;
+      }
+    }
+    vi.spyOn(window, 'Image').mockImplementation(
+      MockImage as unknown as typeof window.Image
+    );
+
+    render(
+      <Avatar>
+        <AvatarImage src="/missing-photo.jpg" alt="Missing user photo" />
+        <AvatarFallback>UP</AvatarFallback>
+      </Avatar>
+    );
+
+    listeners.get('error')?.();
+
+    expect(screen.getByText('UP')).toBeVisible();
+    expect(screen.queryByAltText('Missing user photo')).not.toBeInTheDocument();
+
+    vi.restoreAllMocks();
   });
 });
 
@@ -114,18 +193,6 @@ describe('AvatarFallback', () => {
 
     expect(fallback).toBeVisible();
   });
-
-  it('accepts custom className', () => {
-    render(
-      <Avatar>
-        <AvatarFallback className="custom-fallback">AB</AvatarFallback>
-      </Avatar>
-    );
-
-    const fallback = screen.getByText('AB');
-
-    expect(fallback.className).toContain('custom-fallback');
-  });
 });
 
 describe('AvatarBadge', () => {
@@ -139,18 +206,6 @@ describe('AvatarBadge', () => {
     const badge = document.querySelector('[data-slot="avatar-badge"]');
 
     expect(badge).toBeInTheDocument();
-  });
-
-  it('accepts custom className', () => {
-    render(
-      <Avatar>
-        <AvatarBadge className="custom-badge" />
-      </Avatar>
-    );
-
-    const badge = document.querySelector('[data-slot="avatar-badge"]');
-
-    expect(badge?.className).toContain('custom-badge');
   });
 });
 

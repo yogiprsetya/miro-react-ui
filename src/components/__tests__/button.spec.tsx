@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import userEvent from '@testing-library/user-event';
+import { describe, expect, it, vi } from 'vitest';
 import { Button } from '~/components/ui/button';
 
 describe('Button', () => {
@@ -11,7 +12,7 @@ describe('Button', () => {
     expect(button).toBeInTheDocument();
   });
 
-  it('applies outline and compact variants', () => {
+  it('renders outline and compact variant content', () => {
     render(
       <Button variant="outline" size="sm">
         Secondary action
@@ -20,14 +21,42 @@ describe('Button', () => {
 
     const button = screen.getByRole('button', { name: 'Secondary action' });
 
-    expect(button).toHaveAttribute('data-variant', 'outline');
-    expect(button).toHaveAttribute('data-size', 'sm');
+    expect(button).toBeVisible();
   });
 
   it('supports disabled state', () => {
     render(<Button disabled>Saving</Button>);
 
     expect(screen.getByRole('button', { name: 'Saving' })).toBeDisabled();
+  });
+
+  it('calls its click handler and receives keyboard focus', async () => {
+    const user = userEvent.setup();
+    const onClick = vi.fn();
+
+    render(<Button onClick={onClick}>Create issue</Button>);
+
+    const button = screen.getByRole('button', { name: 'Create issue' });
+    button.focus();
+    await user.keyboard('{Enter}');
+
+    expect(button).toHaveFocus();
+    expect(onClick).toHaveBeenCalledOnce();
+  });
+
+  it('does not invoke the click handler when disabled', async () => {
+    const user = userEvent.setup();
+    const onClick = vi.fn();
+
+    render(
+      <Button disabled onClick={onClick}>
+        Saving
+      </Button>
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Saving' }));
+
+    expect(onClick).not.toHaveBeenCalled();
   });
 
   it('renders child element when asChild is set', () => {

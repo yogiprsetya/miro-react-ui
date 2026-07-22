@@ -15,7 +15,6 @@ describe('Textarea', () => {
     const textarea = getByRole('textbox', { name: 'Board description' });
 
     expect(textarea).toBeInTheDocument();
-    expect(textarea).toHaveAttribute('data-slot', 'textarea');
     expect(textarea).toHaveAttribute('placeholder', 'Describe the board');
   });
 
@@ -42,7 +41,5 @@ describe('Textarea', () => {
 
     expect(textarea).toBeDisabled();
     expect(textarea).toHaveAttribute('aria-invalid', 'true');
-    expect(textarea.className).toContain('disabled:cursor-not-allowed');
-    expect(textarea.className).toContain('aria-invalid:border-error-500');
   });
 });

@@ -37,12 +37,14 @@ describe('Field', () => {
   });
 
   it('supports horizontal orientation', () => {
-    const { container } = render(<Field orientation="horizontal" />);
-
-    expect(container.querySelector('[data-slot="field"]')).toHaveAttribute(
-      'data-orientation',
-      'horizontal'
+    render(
+      <Field orientation="horizontal">
+        <FieldLabel htmlFor="board-title">Board title</FieldLabel>
+        <Input id="board-title" />
+      </Field>
     );
+
+    expect(screen.getByLabelText('Board title')).toBeInTheDocument();
   });
 
   it('does not announce errors assertively unless requested', () => {

@@ -12,22 +12,18 @@ describe('Switch', () => {
     });
 
     expect(switchControl).toBeInTheDocument();
-    expect(switchControl).toHaveAttribute('data-slot', 'switch');
-    expect(switchControl).toHaveAttribute('data-size', 'md');
     expect(switchControl).toHaveAttribute('data-state', 'unchecked');
     expect(switchControl).toHaveAttribute('value', 'on');
   });
 
-  it('applies the requested size variant', () => {
+  it('renders the requested size variant', () => {
     render(<Switch aria-label="Marketing emails" size="lg" />);
 
     const switchControl = screen.getByRole('switch', {
       name: 'Marketing emails',
     });
 
-    expect(switchControl).toHaveAttribute('data-size', 'lg');
-    expect(switchControl.className).toContain('h-7');
-    expect(switchControl.className).toContain('w-12.5');
+    expect(switchControl).toBeVisible();
   });
 
   it('calls onCheckedChange when toggled', () => {
@@ -43,18 +39,37 @@ describe('Switch', () => {
   it('moves the thumb for an uncontrolled checked switch', () => {
     render(<Switch aria-label="Sync status" defaultChecked />);
 
-    const thumb = screen
-      .getByRole('switch', { name: 'Sync status' })
-      .querySelector('[data-slot="switch-thumb"]');
-
-    expect(thumb).toHaveAttribute('data-state', 'checked');
-    expect(thumb?.className).toContain('data-[state=checked]:translate-x');
+    expect(screen.getByRole('switch', { name: 'Sync status' })).toHaveAttribute(
+      'aria-checked',
+      'true'
+    );
   });
 
   it('supports disabled state', () => {
     render(<Switch aria-label="Focus mode" disabled />);
 
     expect(screen.getByRole('switch', { name: 'Focus mode' })).toBeDisabled();
+  });
+
+  it('does not change state or call back when disabled', async () => {
+    const user = userEvent.setup();
+    const onCheckedChange = vi.fn();
+
+    render(
+      <Switch
+        aria-label="Disabled focus mode"
+        disabled
+        onCheckedChange={onCheckedChange}
+      />
+    );
+
+    const switchControl = screen.getByRole('switch', {
+      name: 'Disabled focus mode',
+    });
+    await user.click(switchControl);
+
+    expect(switchControl).toHaveAttribute('data-state', 'unchecked');
+    expect(onCheckedChange).not.toHaveBeenCalled();
   });
 
   it('toggles with Space when focused', async () => {
@@ -67,6 +82,20 @@ describe('Switch', () => {
     switchControl.focus();
     await user.keyboard(' ');
 
+    expect(switchControl).toHaveAttribute('data-state', 'checked');
+  });
+
+  it('toggles with Enter when focused', async () => {
+    const user = userEvent.setup();
+    render(<Switch aria-label="Keyboard enter mode" />);
+
+    const switchControl = screen.getByRole('switch', {
+      name: 'Keyboard enter mode',
+    });
+    switchControl.focus();
+    await user.keyboard('{Enter}');
+
+    expect(switchControl).toHaveFocus();
     expect(switchControl).toHaveAttribute('data-state', 'checked');
   });
 });

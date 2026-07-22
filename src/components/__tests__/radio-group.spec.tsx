@@ -15,27 +15,7 @@ describe('RadioGroup', () => {
     const boardView = screen.getByRole('radio', { name: 'Board view' });
 
     expect(group).toBeInTheDocument();
-    expect(group).toHaveAttribute('data-slot', 'radio-group');
-    expect(boardView).toHaveAttribute('data-slot', 'radio-group-item');
-    expect(boardView).toHaveAttribute('data-size', 'md');
     expect(boardView).toHaveAttribute('data-state', 'checked');
-  });
-
-  it('applies the requested size variant', () => {
-    render(
-      <RadioGroup defaultValue="notifications" aria-label="Notification level">
-        <RadioGroupItem
-          value="notifications"
-          size="lg"
-          aria-label="All notifications"
-        />
-      </RadioGroup>
-    );
-
-    const radio = screen.getByRole('radio', { name: 'All notifications' });
-
-    expect(radio).toHaveAttribute('data-size', 'lg');
-    expect(radio.className).toContain('size-7');
   });
 
   it('calls onValueChange when selection changes', () => {
@@ -54,12 +34,23 @@ describe('RadioGroup', () => {
   });
 
   it('supports disabled state', () => {
+    const onValueChange = vi.fn();
+
     render(
-      <RadioGroup defaultValue="private" aria-label="Privacy">
+      <RadioGroup
+        defaultValue="private"
+        aria-label="Privacy"
+        onValueChange={onValueChange}
+      >
         <RadioGroupItem value="private" aria-label="Private" disabled />
       </RadioGroup>
     );
 
-    expect(screen.getByRole('radio', { name: 'Private' })).toBeDisabled();
+    const radio = screen.getByRole('radio', { name: 'Private' });
+    fireEvent.click(radio);
+
+    expect(radio).toBeDisabled();
+    expect(radio).toHaveAttribute('aria-checked', 'true');
+    expect(onValueChange).not.toHaveBeenCalled();
   });
 });

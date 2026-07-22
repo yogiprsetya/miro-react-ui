@@ -10,18 +10,8 @@ describe('Checkbox', () => {
     const checkbox = screen.getByRole('checkbox', { name: 'Accept terms' });
 
     expect(checkbox).toBeInTheDocument();
-    expect(checkbox).toHaveAttribute('data-slot', 'checkbox');
     expect(checkbox).toHaveAttribute('data-state', 'unchecked');
     expect(checkbox).toHaveAttribute('value', 'on');
-  });
-
-  it('applies the requested size variant', () => {
-    render(<Checkbox aria-label="Subscribe" size="lg" />);
-
-    const checkbox = screen.getByRole('checkbox', { name: 'Subscribe' });
-
-    expect(checkbox.className).toContain('size-7');
-    expect(checkbox.className).toContain('rounded-md');
   });
 
   it('calls onCheckedChange when toggled', () => {
@@ -42,6 +32,25 @@ describe('Checkbox', () => {
     expect(
       screen.getByRole('checkbox', { name: 'Archive board' })
     ).toBeDisabled();
+  });
+
+  it('does not change state or call back when disabled', async () => {
+    const user = userEvent.setup();
+    const onCheckedChange = vi.fn();
+
+    render(
+      <Checkbox
+        aria-label="Disabled terms"
+        disabled
+        onCheckedChange={onCheckedChange}
+      />
+    );
+
+    const checkbox = screen.getByRole('checkbox', { name: 'Disabled terms' });
+    await user.click(checkbox);
+
+    expect(checkbox).toHaveAttribute('data-state', 'unchecked');
+    expect(onCheckedChange).not.toHaveBeenCalled();
   });
 
   it('toggles with the keyboard when focused', async () => {

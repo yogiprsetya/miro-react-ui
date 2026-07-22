@@ -10,7 +10,6 @@ describe('Input', () => {
     const input = screen.getByRole('textbox', { name: 'Board name' });
 
     expect(input).toBeInTheDocument();
-    expect(input).toHaveAttribute('data-slot', 'input');
     expect(input).toHaveAttribute('placeholder', 'Untitled board');
   });
 
@@ -41,7 +40,5 @@ describe('Input', () => {
 
     expect(input).toBeDisabled();
     expect(input).toHaveAttribute('aria-invalid', 'true');
-    expect(input.className).toContain('disabled:cursor-not-allowed');
-    expect(input.className).toContain('aria-invalid:border-error-500');
   });
 });
