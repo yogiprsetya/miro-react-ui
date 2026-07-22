@@ -17,7 +17,6 @@ Note: This will impact Vite dev & build performances.
 
 If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-````js
 # Miro React UI
 
 [![CI](https://github.com/yogiprsetya/miro-react-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/yogiprsetya/miro-react-ui/actions/workflows/ci.yml)
@@ -66,19 +65,19 @@ applications control their React, Radix, icon, toast, and styling versions.
 
 ## Component inventory
 
-| Component | Use it for | Main alternatives |
-| --- | --- | --- |
-| `Button` | Actions and form submission | Use a link for navigation |
-| `Badge` | Compact status or category labels | Use inline text for non-status copy |
-| `Avatar` | User identity, fallbacks, and groups | Use an icon for generic entities |
-| `Input` / `Textarea` | User-entered text | Use `Select` for predefined values |
-| `Checkbox` | Independent boolean choices | Use `Switch` for immediate settings |
-| `RadioGroup` | One choice from a short visible list | Use `Select` for long lists |
-| `Select` | One choice from a space-constrained list | Use `RadioGroup` for short lists |
-| `Switch` | Immediate on/off settings | Use `Checkbox` when submitting a form |
-| `Progress` | Determinate task progress | Use a spinner for indeterminate work |
-| `Tooltip` | Short supplemental context on hover/focus | Use inline help for persistent guidance |
-| `Toaster` | Transient feedback and confirmations | Use inline errors for form validation |
+| Component            | Use it for                                | Main alternatives                       |
+| -------------------- | ----------------------------------------- | --------------------------------------- |
+| `Button`             | Actions and form submission               | Use a link for navigation               |
+| `Badge`              | Compact status or category labels         | Use inline text for non-status copy     |
+| `Avatar`             | User identity, fallbacks, and groups      | Use an icon for generic entities        |
+| `Input` / `Textarea` | User-entered text                         | Use `Select` for predefined values      |
+| `Checkbox`           | Independent boolean choices               | Use `Switch` for immediate settings     |
+| `RadioGroup`         | One choice from a short visible list      | Use `Select` for long lists             |
+| `Select`             | One choice from a space-constrained list  | Use `RadioGroup` for short lists        |
+| `Switch`             | Immediate on/off settings                 | Use `Checkbox` when submitting a form   |
+| `Progress`           | Determinate task progress                 | Use a spinner for indeterminate work    |
+| `Tooltip`            | Short supplemental context on hover/focus | Use inline help for persistent guidance |
+| `Toaster`            | Transient feedback and confirmations      | Use inline errors for form validation   |
 
 ## Architecture
 
@@ -92,7 +91,7 @@ src/
 ├── lib/             # Shared utilities such as cn()
 ├── styles/          # Tailwind entrypoint, fonts, and design tokens
 └── test/            # Shared test setup and browser polyfills
-````
+```
 
 The `src/components/ui/` layer contains first-party wrappers around Radix
 primitives plus small styled controls such as `Input` and `Textarea`. These
