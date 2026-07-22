@@ -172,9 +172,9 @@ describe('AvatarGroup', () => {
     expect(group).toBeVisible();
   });
 
-  it('sets data-size when size is provided', () => {
+  it('synchronizes the group and child avatar size', () => {
     render(
-      <AvatarGroup size="lg">
+      <AvatarGroup size="sm">
         <Avatar size="lg">
           <AvatarFallback>A</AvatarFallback>
         </Avatar>
@@ -182,11 +182,13 @@ describe('AvatarGroup', () => {
     );
 
     const group = screen.getByText('A').closest('[data-slot="avatar-group"]');
+    const avatar = screen.getByText('A').closest('[data-slot="avatar"]');
 
-    expect(group).toHaveAttribute('data-size', 'lg');
+    expect(group).toHaveAttribute('data-size', 'sm');
+    expect(avatar).toHaveAttribute('data-size', 'sm');
   });
 
-  it('does not set data-size when size is omitted', () => {
+  it('uses the default xl size for the group and child avatar', () => {
     render(
       <AvatarGroup>
         <Avatar>
@@ -196,15 +198,17 @@ describe('AvatarGroup', () => {
     );
 
     const group = screen.getByText('A').closest('[data-slot="avatar-group"]');
+    const avatar = screen.getByText('A').closest('[data-slot="avatar"]');
 
-    expect(group).not.toHaveAttribute('data-size');
+    expect(group).toHaveAttribute('data-size', 'xl');
+    expect(avatar).toHaveAttribute('data-size', 'xl');
   });
 });
 
 describe('AvatarGroupCount', () => {
   it('renders the group count', () => {
     render(
-      <AvatarGroup>
+      <AvatarGroup size="lg">
         <AvatarGroupCount>+3</AvatarGroupCount>
       </AvatarGroup>
     );
@@ -212,5 +216,6 @@ describe('AvatarGroupCount', () => {
     const count = screen.getByText('+3');
 
     expect(count).toBeVisible();
+    expect(count).toHaveAttribute('data-size', 'lg');
   });
 });

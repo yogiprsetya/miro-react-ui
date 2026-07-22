@@ -3,23 +3,32 @@ import { Avatar as AvatarPrimitive } from 'radix-ui';
 
 import { cn } from '~/lib/utils';
 
+type AvatarSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+
+const AvatarGroupSizeContext = React.createContext<AvatarSize | undefined>(
+  undefined
+);
+
 type AvatarProps = React.ComponentProps<typeof AvatarPrimitive.Root> & {
-  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+  size?: AvatarSize;
 };
 
 function Avatar({ className, size = 'xl', ...props }: AvatarProps) {
+  const groupSize = React.useContext(AvatarGroupSizeContext);
+  const resolvedSize = groupSize ?? size;
+
   return (
     <AvatarPrimitive.Root
       data-slot="avatar"
-      data-size={size}
+      data-size={resolvedSize}
       className={cn(
         'group/avatar relative flex shrink-0 rounded-full select-none after:absolute after:inset-0 after:rounded-full',
         {
-          'size-6': size === 'sm',
-          'size-8': size === 'md',
-          'size-12': size === 'lg',
-          'size-16': size === 'xl',
-          'size-24': size === '2xl',
+          'size-6': resolvedSize === 'sm',
+          'size-8': resolvedSize === 'md',
+          'size-12': resolvedSize === 'lg',
+          'size-16': resolvedSize === 'xl',
+          'size-24': resolvedSize === '2xl',
         },
         className
       )}
@@ -86,20 +95,29 @@ function AvatarBadge({ className, ...props }: React.ComponentProps<'span'>) {
 }
 
 type AvatarGroupProps = React.ComponentProps<'div'> & {
-  size?: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+  size?: AvatarSize;
 };
 
-function AvatarGroup({ className, size, ...props }: AvatarGroupProps) {
+function AvatarGroup({
+  className,
+  size = 'xl',
+  children,
+  ...props
+}: AvatarGroupProps) {
   return (
-    <div
-      data-slot="avatar-group"
-      className={cn(
-        'group/avatar-group flex -space-x-2 *:data-[slot=avatar]:ring-2',
-        className
-      )}
-      {...(size && { 'data-size': size })}
-      {...props}
-    />
+    <AvatarGroupSizeContext.Provider value={size}>
+      <div
+        data-slot="avatar-group"
+        data-size={size}
+        className={cn(
+          'group/avatar-group flex -space-x-2 *:data-[slot=avatar]:ring-2',
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </div>
+    </AvatarGroupSizeContext.Provider>
   );
 }
 
@@ -107,9 +125,12 @@ function AvatarGroupCount({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
+  const groupSize = React.useContext(AvatarGroupSizeContext);
+
   return (
     <div
       data-slot="avatar-group-count"
+      {...(groupSize && { 'data-size': groupSize })}
       className={cn(
         'bg-primary-800 relative flex size-8 shrink-0 items-center justify-center rounded-full text-sm text-neutral-50 ring-2 [&>svg]:size-4',
         'group-has-data-[size=sm]/avatar-group:size-6 group-has-data-[size=sm]/avatar-group:text-[9px] group-has-data-[size=sm]/avatar-group:[&>svg]:size-3',

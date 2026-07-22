@@ -99,7 +99,7 @@ export const WithBadge: Story = {
 
 export const Group: Story = {
   render: () => (
-    <AvatarGroup>
+    <AvatarGroup size="md">
       <Avatar>
         <AvatarImage src={fixtureAvatar} alt="User 1" />
         <AvatarFallback>U1</AvatarFallback>
