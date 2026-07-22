@@ -34,6 +34,21 @@ describe('Toaster', () => {
     expect(region).toHaveAttribute('aria-live', 'polite');
   });
 
+  it('announces the toast message through the live region', async () => {
+    const user = userEvent.setup();
+
+    render(<TestApp onToast={() => toast.success('Board saved')} />);
+
+    await user.click(screen.getByRole('button', { name: 'Show toast' }));
+
+    const region = await screen.findByRole('region', {
+      name: /notifications/i,
+    });
+
+    expect(region).toHaveAttribute('aria-live', 'polite');
+    expect(region).toHaveTextContent('Board saved');
+  });
+
   it('passes theme and style props to the underlying toaster', async () => {
     const user = userEvent.setup();
     const { container } = render(<TestApp onToast={() => toast('Styled')} />);
@@ -94,6 +109,16 @@ describe('Toaster', () => {
     expect(await screen.findByText('Something went wrong')).toBeInTheDocument();
     expect(await screen.findByText('New mention')).toBeInTheDocument();
     expect(await screen.findByText('Offline mode')).toBeInTheDocument();
+  });
+
+  it('displays a loading toast', async () => {
+    const user = userEvent.setup();
+
+    render(<TestApp onToast={() => toast.loading('Saving board')} />);
+
+    await user.click(screen.getByRole('button', { name: 'Show toast' }));
+
+    expect(await screen.findByText('Saving board')).toBeInTheDocument();
   });
 
   it('respects external props forwarded to the sonner component', async () => {
