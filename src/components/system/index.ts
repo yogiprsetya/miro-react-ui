@@ -1,2 +1,8 @@
-export { Field, FieldDescription, FieldError, FieldLabel } from './field';
-export type { FieldErrorProps, FieldProps } from './field';
+export {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+  FieldLayout,
+} from './field';
+export type { FieldErrorProps, FieldLayoutProps, FieldProps } from './field';

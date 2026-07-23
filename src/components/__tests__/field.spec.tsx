@@ -5,10 +5,20 @@ import {
   FieldDescription,
   FieldError,
   FieldLabel,
+  FieldLayout,
 } from '~/components/system/field';
 import { Input } from '~/components/ui/input';
 
 describe('Field', () => {
+  it('exposes the layout-only contract through FieldLayout', () => {
+    render(<FieldLayout data-testid="field-layout" />);
+
+    expect(screen.getByTestId('field-layout')).toHaveAttribute(
+      'data-slot',
+      'field'
+    );
+  });
+
   it('composes a labeled input with description and error', () => {
     render(
       <Field>

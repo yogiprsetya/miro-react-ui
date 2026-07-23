@@ -2,11 +2,12 @@ import * as React from 'react';
 import { Progress as ProgressPrimitive } from 'radix-ui';
 import { cn } from '~/lib/utils';
 
-function Progress({
-  className,
-  value,
-  ...props
-}: React.ComponentProps<typeof ProgressPrimitive.Root>) {
+type ProgressProps = Omit<
+  React.ComponentProps<typeof ProgressPrimitive.Root>,
+  'aria-valuemin' | 'aria-valuemax' | 'aria-valuenow'
+>;
+
+function Progress({ className, value, ...props }: ProgressProps) {
   const clampedValue = Math.min(100, Math.max(0, value ?? 0));
   const translation = -(100 - clampedValue);
   const ariaValueNow = value === undefined ? undefined : clampedValue;
@@ -19,9 +20,9 @@ function Progress({
         'relative flex h-2 w-full items-center overflow-x-hidden rounded-full bg-neutral-300',
         className
       )}
-      aria-valuemin={props['aria-valuemin'] ?? 0}
-      aria-valuemax={props['aria-valuemax'] ?? 100}
-      aria-valuenow={props['aria-valuenow'] ?? ariaValueNow}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={ariaValueNow}
     >
       <ProgressPrimitive.Indicator
         data-slot="progress-indicator"
@@ -34,4 +35,5 @@ function Progress({
   );
 }
 
+export type { ProgressProps };
 export { Progress };

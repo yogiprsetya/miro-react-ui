@@ -13,6 +13,12 @@ export {
   FieldDescription,
   FieldError,
   FieldLabel,
+  FieldLayout,
+} from './components/system';
+export type {
+  FieldErrorProps,
+  FieldLayoutProps,
+  FieldProps,
 } from './components/system';
 export { Badge, badgeVariants } from './components/ui/badge';
 export { Button } from './components/ui/button';

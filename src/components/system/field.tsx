@@ -5,12 +5,18 @@ import { cn } from '~/lib/utils';
 /**
  * Layout primitive for composing a label, control, description, and error.
  * Consumers own the control IDs and `aria-describedby` association.
+ *
+ * This component intentionally does not generate IDs or mutate child controls.
  */
-interface FieldProps extends React.ComponentProps<'div'> {
+interface FieldLayoutProps extends React.ComponentProps<'div'> {
   orientation?: 'vertical' | 'horizontal';
 }
 
-function Field({ className, orientation = 'vertical', ...props }: FieldProps) {
+function FieldLayout({
+  className,
+  orientation = 'vertical',
+  ...props
+}: FieldLayoutProps) {
   return (
     <div
       data-slot="field"
@@ -24,6 +30,15 @@ function Field({ className, orientation = 'vertical', ...props }: FieldProps) {
     />
   );
 }
+
+/**
+ * @deprecated Use `FieldLayout` to make the explicit layout-only contract
+ * visible at the call site.
+ */
+const Field = FieldLayout;
+
+/** @deprecated Use `FieldLayoutProps`. */
+type FieldProps = FieldLayoutProps;
 
 function FieldLabel({ className, ...props }: React.ComponentProps<'label'>) {
   return (
@@ -65,5 +80,5 @@ function FieldError({
   );
 }
 
-export type { FieldErrorProps, FieldProps };
-export { Field, FieldDescription, FieldError, FieldLabel };
+export type { FieldErrorProps, FieldLayoutProps, FieldProps };
+export { Field, FieldDescription, FieldError, FieldLabel, FieldLayout };

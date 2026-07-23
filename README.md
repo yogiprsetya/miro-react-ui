@@ -1,130 +1,97 @@
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
 # Miro React UI
 
 [![CI](https://github.com/yogiprsetya/miro-react-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/yogiprsetya/miro-react-ui/actions/workflows/ci.yml)
 [![Coverage](https://codecov.io/gh/yogiprsetya/miro-react-ui/branch/master/graph/badge.svg)](https://codecov.io/gh/yogiprsetya/miro-react-ui)
 
-Miro React UI is a small, accessible React design system built as a portfolio
-project. It demonstrates reusable component APIs, token-driven styling,
-Radix-based interaction primitives, Storybook documentation, and behavior-first
-component tests.
+Miro React UI is a small, accessible React design system for foundational
+product controls. It demonstrates composable TypeScript APIs, token-driven
+styling, Radix-based interaction primitives, Storybook documentation, and
+behavior-first component tests.
 
-## Goals
+The project is intentionally focused: it favors clear contracts and explicit
+composition over a large abstraction layer. Every public component is backed by
+tests and a Storybook story, with accessibility treated as part of the API.
 
-- Provide composable components with sensible defaults.
-- Keep interaction behavior accessible by building on Radix primitives where
-  appropriate.
-- Treat design tokens, tests, and Storybook stories as part of the component
-  contract.
-- Make trade-offs visible rather than hiding them behind a large abstraction.
-
-This repository is intentionally focused on foundational components. The
-library build emits ESM, CSS tokens, and TypeScript declarations for package
-consumers.
-
-## Package usage
+## Installation
 
 ```bash
 pnpm add miro-react-ui react react-dom
 ```
 
-Import the public API and stylesheet; consumers should not import files from
-`src/` or `dist/` directly:
-
-```tsx
-import { Button } from 'miro-react-ui';
-import 'miro-react-ui/styles.css';
-```
-
-Build artifacts are generated with `pnpm build:lib`:
-
-- `dist/miro-react-ui.js` — ESM component bundle, approximately 28.7 kB raw / 7.4 kB gzip.
-- `dist/miro-react-ui.css` — Tailwind and design-token stylesheet, approximately 34.4 kB raw / 6.7 kB gzip.
-- `dist/types/index.d.ts` — public TypeScript declarations.
-
-Runtime libraries are externalized and declared as peer dependencies so
-applications control their React, Radix, icon, toast, and styling versions.
-
-## Component inventory
-
-| Component            | Use it for                                | Main alternatives                       |
-| -------------------- | ----------------------------------------- | --------------------------------------- |
-| `Button`             | Actions and form submission               | Use a link for navigation               |
-| `Badge`              | Compact status or category labels         | Use inline text for non-status copy     |
-| `Avatar`             | User identity, fallbacks, and groups      | Use an icon for generic entities        |
-| `Input` / `Textarea` | User-entered text                         | Use `Select` for predefined values      |
-| `Checkbox`           | Independent boolean choices               | Use `Switch` for immediate settings     |
-| `RadioGroup`         | One choice from a short visible list      | Use `Select` for long lists             |
-| `Select`             | One choice from a space-constrained list  | Use `RadioGroup` for short lists        |
-| `Switch`             | Immediate on/off settings                 | Use `Checkbox` when submitting a form   |
-| `Progress`           | Determinate task progress                 | Use a spinner for indeterminate work    |
-| `Tooltip`            | Short supplemental context on hover/focus | Use inline help for persistent guidance |
-| `Toaster`            | Transient feedback and confirmations      | Use inline errors for form validation   |
-
-## Architecture
+The package supports React 18 and React 19:
 
 ```text
-src/
-├── components/
-│   ├── ui/          # First-party primitive wrappers and styled primitives
-│   ├── system/      # Reserved for opinionated product-level compositions
-│   ├── stories/     # Storybook living documentation
-│   └── __tests__/   # React Testing Library behavior tests
-├── lib/             # Shared utilities such as cn()
-├── styles/          # Tailwind entrypoint, fonts, and design tokens
-└── test/            # Shared test setup and browser polyfills
+react: ^18.0.0 || ^19.0.0
+react-dom: ^18.0.0 || ^19.0.0
 ```
 
-The `src/components/ui/` layer contains first-party wrappers around Radix
-primitives plus small styled controls such as `Input` and `Textarea`. These
-components keep APIs close to their underlying primitive and remain broadly
-composable.
+The package declares these runtime libraries as peer dependencies so consuming
+applications control their versions:
 
-Opinionated, multi-control compositions belong in `src/components/system/`.
-The current example is `Field`, which composes labels, descriptions, errors,
-and a control without changing the underlying primitive APIs. Existing
-single-control wrappers remain in `src/components/ui/`.
+- `class-variance-authority`
+- `clsx`
+- `lucide-react`
+- `radix-ui`
+- `sonner`
+- `tailwind-merge`
 
-## Usage
+## Quick start
 
-Run the Storybook workspace:
-
-```bash
-pnpm install
-pnpm storybook
-```
-
-Example:
+Import components from the package entry point and load the generated
+stylesheet once in the application entry point:
 
 ```tsx
-import { Button } from '~/components/ui/button';
+import { Button, Input } from 'miro-react-ui';
+import 'miro-react-ui/styles.css';
 
-export function CreateIssueAction() {
-  return <Button type="button">Create issue</Button>;
+export function CreateIssueForm() {
+  return (
+    <form>
+      <Input aria-label="Issue title" placeholder="Issue title" />
+      <Button type="submit">Create issue</Button>
+    </form>
+  );
 }
 ```
 
-For links, use `asChild` with exactly one interactive child. The child is
-replaced as the rendered element, so do not pass multiple children, fragments,
-or nested interactive controls:
+Consumers should import from the public package entry point, not from `src/`
+or internal `dist/` files.
+
+## Component guide
+
+| Component     | Use it for                                                      | Prefer an alternative when                                        |
+| ------------- | --------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `Button`      | Actions and form submission                                     | The interaction is navigation; use a link                         |
+| `Badge`       | Compact status or category labels                               | The text is ordinary content, not a status                        |
+| `Avatar`      | User identity, fallbacks, and groups                            | The entity is generic; use an icon                                |
+| `Input`       | Single-line user-entered text                                   | The value comes from a fixed set; use `Select`                    |
+| `Textarea`    | Multi-line user-entered text                                    | The value is short and single-line; use `Input`                   |
+| `Checkbox`    | Independent boolean choices submitted with a form               | The setting applies immediately; use `Switch`                     |
+| `RadioGroup`  | One choice from a short, visible list                           | The list is long or space-constrained; use `Select`               |
+| `Select`      | One choice from a space-constrained list                        | Several options should be visible at once; use `RadioGroup`       |
+| `Switch`      | Immediate on/off settings                                       | The value is submitted as part of a form; use `Checkbox`          |
+| `Progress`    | Determinate task progress                                       | Work has no measurable percentage; use a spinner                  |
+| `Tooltip`     | Short supplemental context on hover or focus                    | The information is essential; render it visibly                   |
+| `Toaster`     | Transient feedback and confirmations                            | The message is validation or persistent state; use inline UI      |
+| `FieldLayout` | Explicitly composed label, help text, control, and error layout | Automatic form relationships are required; use a form abstraction |
+
+## API reference
+
+All components accept the native props of their underlying HTML element or
+Radix primitive unless noted otherwise. `className` is available for layout
+composition, while public visual states should use typed variants.
+
+### `Button`
+
+| Prop                | Type                             | Default   |
+| ------------------- | -------------------------------- | --------- |
+| `variant`           | `'solid' \| 'outline'`           | `'solid'` |
+| `size`              | `'sm' \| 'md' \| 'lg'`           | `'md'`    |
+| `asChild`           | `boolean`                        | `false`   |
+| native button props | `React.ComponentProps<'button'>` | —         |
+
+Use `asChild` with exactly one interactive child. It renders the child through
+Radix Slot rather than rendering a `<button>` itself:
 
 ```tsx
 <Button asChild variant="outline">
@@ -132,94 +99,222 @@ or nested interactive controls:
 </Button>
 ```
 
-`Button asChild` does not add native disabled behavior to an anchor. If a link
-must be unavailable, render it conditionally or provide link-specific behavior
-such as `aria-disabled`, event prevention, and removal of its `href`.
-`ButtonLink` is intentionally not provided because these link semantics belong
-to the consuming application.
+`disabled` has native behavior only for a button. An anchor does not support a
+native disabled state; for an unavailable link, remove its `href` or implement
+`aria-disabled`, focus, and click handling in the consuming application.
+
+### `Badge`
+
+| Prop      | Type                   | Default    |
+| --------- | ---------------------- | ---------- |
+| `variant` | `'solid' \| 'outline'` | `'solid'`  |
+| `size`    | `'small' \| 'medium'`  | `'medium'` |
+| `asChild` | `boolean`              | `false`    |
+
+Use badges for compact status or category labels. Do not use them as the only
+way to communicate an important state; pair color with text or another visible
+cue.
+
+### Form controls
+
+`Input` and `Textarea` preserve their native HTML APIs. `Checkbox`, `Switch`,
+`RadioGroup`, and `Select` preserve the corresponding Radix APIs, including
+controlled and uncontrolled usage.
+
+| Component        | Additional public props                                              |
+| ---------------- | -------------------------------------------------------------------- |
+| `Input`          | Native input props, including `type`, `disabled`, and `aria-invalid` |
+| `Textarea`       | Native textarea props, including `disabled` and `aria-invalid`       |
+| `Checkbox`       | Radix checkbox props plus `size: 'sm' \| 'md' \| 'lg'`               |
+| `Switch`         | Radix switch props plus `size: 'sm' \| 'md' \| 'lg'`                 |
+| `RadioGroupItem` | Radix item props plus `size: 'sm' \| 'md' \| 'lg'`                   |
+| `Select` family  | Radix select root, trigger, content, item, and composition props     |
+
+Use a visible `Label` associated with every form control. The library does not
+infer labels from placeholders.
+
+### `Avatar`
+
+`Avatar` is a compound component composed from `AvatarImage` and
+`AvatarFallback`. `AvatarGroup` provides shared sizing for child avatars.
+
+| Prop               | Type                                    | Default |
+| ------------------ | --------------------------------------- | ------- |
+| `Avatar.size`      | `'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl'` | `'xl'`  |
+| `AvatarGroup.size` | same as `Avatar.size`                   | `'xl'`  |
+
+`AvatarBadge` is decorative by default. If it communicates status, provide an
+accessible label such as `aria-label="Online"`; otherwise mark it
+`aria-hidden="true"`.
+
+### `Progress`
+
+`Progress` represents a fixed percentage from `0` to `100`. Omit `value` for
+an indeterminate progress indicator. The visual indicator and `aria-valuenow`
+are clamped to this fixed range.
+
+### `FieldLayout`
+
+`FieldLayout` is a layout/composition primitive, not an automatic form
+controller.
+Consumers own IDs and accessible relationships:
+
+```tsx
+<FieldLayout>
+  <FieldLabel htmlFor="email">Email</FieldLabel>
+  <Input
+    id="email"
+    aria-invalid="true"
+    aria-describedby="email-help email-error"
+  />
+  <FieldDescription id="email-help">
+    Use your work email address.
+  </FieldDescription>
+  <FieldError id="email-error">Enter a valid email address.</FieldError>
+</FieldLayout>
+```
+
+This explicit contract keeps `FieldLayout` compatible with controls outside
+this library, but consumers must provide the associations correctly. `Field`
+remains available as a deprecated compatibility alias.
+
+## Architecture
+
+```text
+src/
+├── components/
+│   ├── ui/          # Reusable primitives and styled single-control wrappers
+│   ├── system/      # Opinionated multi-control compositions
+│   ├── stories/     # Storybook living documentation
+│   └── __tests__/   # React Testing Library behavior tests
+├── lib/             # Shared utilities such as cn()
+├── styles/          # Tailwind entrypoint, fonts, and design tokens
+└── test/            # Shared test setup and browser polyfills
+```
+
+The `ui/` layer keeps APIs close to native elements or Radix primitives. The
+`system/` layer owns policy and layout for compositions such as `FieldLayout`.
+Components are exported through `src/index.ts`; consumers should not depend on
+internal file paths.
 
 ## Design tokens
 
-Colors and shared visual values are defined in `src/styles/themes.css` and
-consumed through Tailwind classes. Components should reference tokens such as
-`bg-primary-600` or `text-neutral-800`, not raw hex values.
+Shared colors and visual values live in `src/styles/themes.css` and are
+consumed through semantic Tailwind classes such as `bg-primary-600` and
+`text-neutral-800`.
 
-When adding a repeated visual value, add a token first. One-off geometry values
-may remain local when they describe a component-specific control size, but the
-decision should be visible in the component variant definition. Arbitrary
-values are reserved for component geometry or typography precision; colors
-must always use semantic theme tokens.
+When adding a repeated visual value, add a token first. One-off geometry or
+typographic precision may remain local when it is component-specific. Raw color
+values should only appear in the token definitions, not component markup.
 
-## Accessibility
+## Accessibility contract
 
-- Prefer semantic queries and keyboard interaction in tests.
-- Radix primitives provide baseline keyboard, focus, and ARIA behavior for
-  composite controls.
-- Every form control should have an associated label.
-- Invalid controls should expose `aria-invalid` and associate an error through
+- Use semantic elements and query controls by role, label, or accessible name.
+- Radix primitives provide baseline keyboard navigation, focus handling, and
+  ARIA behavior for composite controls.
+- Every form control needs an associated visible `Label`.
+- Invalid controls should expose `aria-invalid` and reference their error with
   `aria-describedby`.
-- Tooltips supplement visible UI; they must not contain essential information.
-- `Button asChild` is only valid with one interactive child such as an `<a>` or
-  `<button>`; fragments, multiple children, and nested interactive controls are
-  invalid compositions.
-- Compose form controls with `Field`, `FieldLabel`, `FieldDescription`, and
-  `FieldError`. Give the control an `id`, point the label's `htmlFor` to it, and
-  reference description/error IDs through `aria-describedby`.
-- `Field` is intentionally a layout/composition primitive. It does not generate
-  IDs or mutate a child control's `aria-describedby`; this keeps composition
-  explicit and supports controls implemented outside this library.
+- Tooltips supplement visible UI and must not contain essential information.
+- `Button asChild` requires exactly one interactive child and does not add
+  disabled behavior to anchors.
+- `FieldLayout` requires explicit `id`, `htmlFor`, and `aria-describedby` wiring.
+- Avatar status indicators need an accessible label or `aria-hidden` depending
+  on whether they convey information.
 
-The Storybook configuration includes `@storybook/addon-a11y` for manual and
-automated accessibility checks. Component tests cover semantic roles and key
-interaction paths; browser-level coverage should be expanded as new composite
-components are added.
+The Storybook workspace includes `@storybook/addon-a11y`. Vitest tests cover
+semantic roles and key keyboard paths; browser-level accessibility coverage is
+expanded as composite components are added.
 
-## Verification commands
+## Development
 
-| Command                | Purpose                                         |
-| ---------------------- | ----------------------------------------------- |
-| `pnpm storybook`       | Start Storybook locally                         |
-| `pnpm build:storybook` | Build the static Storybook site                 |
-| `pnpm test`            | Run unit/component tests                        |
-| `pnpm test:coverage`   | Run tests with V8 coverage                      |
-| `pnpm lint`            | Run ESLint                                      |
-| `pnpm typecheck`       | Run TypeScript validation                       |
-| `pnpm build:lib`       | Build package JavaScript, CSS, and declarations |
+```bash
+pnpm install
+pnpm storybook          # Start Storybook on port 6006
+pnpm test               # Run unit/component tests
+pnpm test:coverage      # Run tests with V8 coverage
+pnpm lint               # Run ESLint
+pnpm typecheck          # Run TypeScript validation
+pnpm build:lib          # Build ESM, CSS, and declarations
+pnpm build:storybook    # Build the static Storybook site
+```
+
+The CI workflow runs install, lint, typecheck, tests, coverage, library build,
+and Storybook build for pushes and pull requests targeting `master` or `main`.
+
+## Verification and package outputs
+
+`pnpm build:lib` produces:
+
+- `dist/miro-react-ui.js` — ESM component bundle
+- `dist/miro-react-ui.css` — Tailwind and design-token stylesheet
+- `dist/types/index.d.ts` — public TypeScript declarations
+
+The library build externalizes React, Radix, icons, toast, and styling runtime
+dependencies. This keeps the published bundle small and lets applications own
+dependency versions. Generated directories such as `dist/`, `coverage/`, and
+`storybook-static/` are not source files and should not be committed.
 
 ## Testing strategy
 
-Tests use Vitest and React Testing Library. They prioritize user-observable
-behavior:
+Tests prioritize user-observable behavior:
 
 - Query controls by role, label, or accessible name.
 - Exercise click and keyboard interactions with `userEvent`.
-- Assert state changes and emitted values rather than internal implementation
-  calls.
+- Assert state changes and emitted values rather than implementation calls.
+- Cover default, variant, disabled, invalid, and composition states.
 - Keep `data-slot` and class assertions limited to stable styling contracts.
 
-## Design decisions and trade-offs
+Storybook explains visual usage and composition. Vitest proves behavior and
+regression cases. Neither replaces the other.
+
+## Design decisions
 
 ### Radix wrappers instead of custom interaction logic
 
-Composite controls use Radix because keyboard navigation, focus handling, and
-ARIA relationships are easy to get subtly wrong. The trade-off is a slightly
-larger dependency surface and APIs that remain close to Radix's composition
-model.
+Composite controls use Radix because keyboard navigation, focus management, and
+ARIA relationships are easy to implement incorrectly. The trade-off is a
+larger peer dependency surface and APIs that remain close to Radix's model.
 
 ### `cva` for finite visual variants
 
-`Button` and `Badge` use `class-variance-authority` because their variants are
-finite and should be discoverable in TypeScript. Free-form `className` remains
-available for layout composition; it is not used to define product state.
+`Button` and `Badge` use `class-variance-authority` because their visual states
+are finite and discoverable in TypeScript. Free-form `className` remains
+available for layout composition, not product state.
 
-### Storybook as the component contract
+### Explicit field relationships
 
-Stories document default, variant, disabled, and composition states. They are
-not a replacement for tests: Storybook explains visual usage, while Vitest
-proves behavior and regression cases.
+`FieldLayout` does not generate IDs or mutate a child control's ARIA attributes. This
+keeps the primitive compatible with external controls and avoids hidden DOM
+mutation, at the cost of requiring consumers to compose relationships
+explicitly. `Field` remains a deprecated alias during the naming transition.
 
-## Current scope and roadmap
+## Contributing and release policy
 
-The current release focuses on foundational controls. The next high-value
-additions are stronger browser interaction coverage for composite controls and
-more opinionated system-level compositions as real use cases emerge.
+Before opening a pull request, run:
+
+```bash
+pnpm lint
+pnpm typecheck
+pnpm test:coverage
+pnpm build:lib
+pnpm build:storybook
+```
+
+Component changes should include the implementation, behavior tests, and
+Storybook documentation in the same change. Public API changes must update
+this README and explain the compatibility impact in the pull request.
+
+The repository uses Conventional Commit prefixes such as `feat:`, `fix:`,
+`docs:`, `test:`, and `refactor:`. Versioning and package publication should
+follow semver: breaking public API changes require a major version, additive
+backward-compatible features require a minor version, and fixes require a
+patch version. The current repository is a portfolio-focused package and does
+not claim an automated npm release pipeline.
+
+## Current scope
+
+The current release focuses on foundational controls. Future high-value work
+includes stronger browser interaction coverage for composite controls, more
+opinionated system-level compositions based on real use cases, and a formal
+release workflow when the package has external consumers.

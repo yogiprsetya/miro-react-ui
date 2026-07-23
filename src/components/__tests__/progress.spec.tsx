@@ -23,6 +23,22 @@ describe('Progress', () => {
     expect(indicator).toHaveStyle({ transform: 'translateX(-25%)' });
   });
 
+  it('always exposes the fixed 0 to 100 ARIA range', () => {
+    render(
+      <Progress
+        value={50}
+        aria-valuemin={10}
+        aria-valuemax={200}
+        aria-valuenow={150}
+      />
+    );
+
+    const root = screen.getByRole('progressbar');
+    expect(root).toHaveAttribute('aria-valuemin', '0');
+    expect(root).toHaveAttribute('aria-valuemax', '100');
+    expect(root).toHaveAttribute('aria-valuenow', '50');
+  });
+
   it.each([
     [-20, 'translateX(-100%)'],
     [120, 'translateX(0%)'],
