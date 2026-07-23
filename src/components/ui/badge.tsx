@@ -16,8 +16,8 @@ const badgeVariants = cva(
         error: 'bg-error-50 text-error-800',
       },
       size: {
-        small: 'text-xs h-6.5',
-        medium: 'text-base h-8',
+        sm: 'text-xs h-6.5',
+        md: 'text-base h-8',
       },
     },
     defaultVariants: {
@@ -40,6 +40,7 @@ function Badge({
     <Comp
       data-slot="badge"
       data-variant={variant}
+      data-size={size}
       className={cn(badgeVariants({ variant, size }), className)}
       {...props}
     />

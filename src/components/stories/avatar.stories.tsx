@@ -51,7 +51,7 @@ export const WithImage: Story = {
   ),
 };
 
-export const Size24: Story = {
+export const Small: Story = {
   args: { size: 'sm' },
   render: (args) => (
     <Avatar {...args}>
@@ -60,7 +60,7 @@ export const Size24: Story = {
   ),
 };
 
-export const Size32: Story = {
+export const Medium: Story = {
   args: { size: 'md' },
   render: (args) => (
     <Avatar {...args}>
@@ -69,7 +69,7 @@ export const Size32: Story = {
   ),
 };
 
-export const Size48: Story = {
+export const Large: Story = {
   args: { size: 'lg' },
   render: (args) => (
     <Avatar {...args}>
@@ -78,7 +78,7 @@ export const Size48: Story = {
   ),
 };
 
-export const Size96: Story = {
+export const ExtraLarge: Story = {
   args: { size: '2xl' },
   render: (args) => (
     <Avatar {...args}>

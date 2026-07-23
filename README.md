@@ -105,15 +105,41 @@ native disabled state; for an unavailable link, remove its `href` or implement
 
 ### `Badge`
 
-| Prop      | Type                   | Default    |
-| --------- | ---------------------- | ---------- |
-| `variant` | `'solid' \| 'outline'` | `'solid'`  |
-| `size`    | `'small' \| 'medium'`  | `'medium'` |
-| `asChild` | `boolean`              | `false`    |
+| Prop      | Type                   | Default   |
+| --------- | ---------------------- | --------- |
+| `variant` | `'solid' \| 'outline'` | `'solid'` |
+| `size`    | `'sm' \| 'md'`         | —         |
+| `asChild` | `boolean`              | `false`   |
 
 Use badges for compact status or category labels. Do not use them as the only
 way to communicate an important state; pair color with text or another visible
 cue.
+
+## API conventions
+
+The component APIs follow these shared rules:
+
+- **Size vocabulary:** use `sm`, `md`, and `lg` consistently. `Avatar` also
+  supports `xl` and `2xl` as display sizes because avatars commonly need larger
+  identity treatments; these are not introduced into other controls by default.
+- **Variant implementation:** use `class-variance-authority` for finite public
+  variants that consumers select (`variant`, `size`). Use conditional class
+  maps for internal geometry that is derived from a prop or context. Do not
+  expose styling-only class names as public variants.
+- **Metadata:** every public component emits `data-slot`. Components with a
+  public `variant` or `size` emit matching `data-variant` or `data-size` values.
+  Metadata is intended for testing and targeted styling, not as a replacement
+  for accessible semantics.
+- **Composition:** `asChild` renders the component through Radix Slot and
+  requires exactly one child. The child becomes the rendered element and must
+  provide its own native semantics; `Button asChild` does not add disabled
+  behavior to anchors.
+- **State models:** controls that wrap Radix primitives preserve their native
+  controlled and uncontrolled props (`value`/`defaultValue`,
+  `checked`/`defaultChecked`, and corresponding change callbacks). Visual
+  wrappers such as `Badge`, `Button`, and `Avatar` are stateless.
+- **Accessibility:** public state must remain available through semantic HTML,
+  ARIA, or visible text. `data-*` attributes are diagnostic metadata only.
 
 ### Form controls
 

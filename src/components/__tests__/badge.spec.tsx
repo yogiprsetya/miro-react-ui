@@ -34,4 +34,13 @@ describe('Badge', () => {
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute('href', '/status/active');
   });
+
+  it.each([
+    ['sm', 'Small'],
+    ['md', 'Medium'],
+  ] as const)('supports the shared %s size vocabulary', (size, content) => {
+    render(<Badge size={size}>{content}</Badge>);
+
+    expect(screen.getByText(content)).toHaveAttribute('data-size', size);
+  });
 });

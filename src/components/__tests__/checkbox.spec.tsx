@@ -14,6 +14,12 @@ describe('Checkbox', () => {
     expect(checkbox).toHaveAttribute('value', 'on');
   });
 
+  it.each(['sm', 'md', 'lg'] as const)('supports size %s', (size) => {
+    render(<Checkbox aria-label={`${size} checkbox`} size={size} />);
+
+    expect(screen.getByRole('checkbox')).toHaveAttribute('data-size', size);
+  });
+
   it('calls onCheckedChange when toggled', () => {
     const onCheckedChange = vi.fn();
 

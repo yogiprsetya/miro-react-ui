@@ -3,6 +3,18 @@ import { describe, expect, it, vi } from 'vitest';
 import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group';
 
 describe('RadioGroup', () => {
+  it.each(['sm', 'md', 'lg'] as const)('supports item size %s', (size) => {
+    render(
+      <RadioGroup aria-label={`${size} options`}>
+        <RadioGroupItem value="one" aria-label="One" size={size} />
+      </RadioGroup>
+    );
+
+    expect(screen.getByRole('radio', { name: 'One' })).toHaveAttribute(
+      'data-size',
+      size
+    );
+  });
   it('renders radio group semantics', () => {
     render(
       <RadioGroup defaultValue="board-view" aria-label="View mode">

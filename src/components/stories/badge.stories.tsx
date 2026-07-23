@@ -12,7 +12,7 @@ const meta = {
   args: {
     children: 'Status',
     variant: 'neutral',
-    size: 'medium',
+    size: 'md',
   },
   argTypes: {
     variant: {
@@ -21,7 +21,7 @@ const meta = {
     },
     size: {
       control: 'inline-radio',
-      options: ['small', 'medium'],
+      options: ['sm', 'md'],
     },
   },
 } satisfies Meta<typeof Badge>;
@@ -60,7 +60,14 @@ export const Error: Story = {
 
 export const Small: Story = {
   args: {
-    size: 'small',
+    size: 'sm',
     children: 'v1.2.3',
+  },
+};
+
+export const Medium: Story = {
+  args: {
+    size: 'md',
+    children: 'Current version',
   },
 };

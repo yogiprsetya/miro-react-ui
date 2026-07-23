@@ -4,6 +4,11 @@ import { describe, expect, it, vi } from 'vitest';
 import { Switch } from '~/components/ui/switch';
 
 describe('Switch', () => {
+  it.each(['sm', 'md', 'lg'] as const)('supports size %s', (size) => {
+    render(<Switch aria-label={`${size} switch`} size={size} />);
+
+    expect(screen.getByRole('switch')).toHaveAttribute('data-size', size);
+  });
   it('renders with switch semantics', () => {
     render(<Switch aria-label="Email notifications" />);
 

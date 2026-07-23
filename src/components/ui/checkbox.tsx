@@ -12,6 +12,7 @@ function Checkbox({ className, size = 'md', ...props }: CheckboxProps) {
   return (
     <CheckboxPrimitive.Root
       data-slot="checkbox"
+      data-size={size}
       className={cn(
         'focus-visible:ring-focus relative flex shrink-0 items-center justify-center border border-transparent transition-colors outline-none after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:ring-2 focus-visible:ring-offset-2',
         'disabled:cursor-not-allowed',
