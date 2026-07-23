@@ -97,6 +97,16 @@ export const WithBadge: Story = {
   ),
 };
 
+export const WithAccessibleBadge: Story = {
+  render: (args) => (
+    <Avatar {...args}>
+      <AvatarImage src={fixtureAvatar} alt="Online user" />
+      <AvatarFallback>JD</AvatarFallback>
+      <AvatarBadge aria-label="Online" />
+    </Avatar>
+  ),
+};
+
 export const Group: Story = {
   render: () => (
     <AvatarGroup size="md">

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { expect, userEvent, within } from 'storybook/test';
 import { Switch } from '~/components/ui/switch';
 
 /**
@@ -37,6 +38,22 @@ export const Default: Story = {
 export const Checked: Story = {
   args: {
     checked: true,
+  },
+};
+
+export const Interaction: Story = {
+  args: {
+    checked: undefined,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const switchControl = canvas.getByRole('switch', {
+      name: 'Enable notifications',
+    });
+
+    await expect(switchControl).toHaveAttribute('aria-checked', 'false');
+    await userEvent.click(switchControl);
+    await expect(switchControl).toHaveAttribute('aria-checked', 'true');
   },
 };
 

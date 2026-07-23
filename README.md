@@ -245,12 +245,19 @@ values should only appear in the token definitions, not component markup.
 - `Button asChild` requires exactly one interactive child and does not add
   disabled behavior to anchors.
 - `FieldLayout` requires explicit `id`, `htmlFor`, and `aria-describedby` wiring.
-- Avatar status indicators need an accessible label or `aria-hidden` depending
-  on whether they convey information.
+- `AvatarBadge` is decorative when empty; add an accessible label when it
+  communicates status. `AvatarGroup` is visual grouping only and does not add
+  list or navigation semantics.
 
 The Storybook workspace includes `@storybook/addon-a11y`. Vitest tests cover
 semantic roles and key keyboard paths; browser-level accessibility coverage is
 expanded as composite components are added.
+
+Storybook is the living component contract. Each public component should have
+a default story, documented variants, important interaction states, and a
+short usage/accessibility note. Use controls to inspect supported props and
+interaction stories to verify behavior that cannot be expressed by a static
+screenshot.
 
 ## Development
 

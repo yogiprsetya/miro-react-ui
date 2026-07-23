@@ -48,7 +48,7 @@ export const Invalid: Story = {
     <div className="flex w-80 flex-col gap-1">
       <Label htmlFor="invalid-input">Workspace slug</Label>
       <Input {...args} id="invalid-input" aria-label={undefined} />
-      <p id="invalid-input-error" className="text-sm text-error-600">
+      <p id="invalid-input-error" className="text-error-600 text-sm">
         Use lowercase letters, numbers, and hyphens.
       </p>
     </div>

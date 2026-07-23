@@ -52,3 +52,15 @@ export const Invalid: Story = {
     </FieldLayout>
   ),
 };
+
+export const Horizontal: Story = {
+  args: {
+    orientation: 'horizontal',
+  },
+  render: (args) => (
+    <FieldLayout {...args}>
+      <FieldLabel htmlFor="horizontal-name">Workspace name</FieldLabel>
+      <Input id="horizontal-name" placeholder="Design team" />
+    </FieldLayout>
+  ),
+};

@@ -74,3 +74,17 @@ export const Disabled: Story = {
     disabled: true,
   },
 };
+
+export const DisabledInteraction: Story = {
+  args: {
+    disabled: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const checkbox = canvas.getByRole('checkbox', { name: 'Accept terms' });
+
+    await expect(checkbox).toBeDisabled();
+    await userEvent.click(checkbox);
+    await expect(checkbox).toHaveAttribute('aria-checked', 'false');
+  },
+};

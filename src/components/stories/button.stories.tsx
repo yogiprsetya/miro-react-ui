@@ -89,3 +89,21 @@ export const AsLink: Story = {
     </Button>
   ),
 };
+
+export const AsLinkDisabledLimitation: Story = {
+  args: {
+    disabled: true,
+    children: 'Unavailable documentation',
+  },
+  render: (args) => (
+    <div className="grid gap-2">
+      <Button {...args} asChild>
+        <a href="/docs">Unavailable documentation</a>
+      </Button>
+      <p className="text-sm text-neutral-600">
+        `disabled` is not native link behavior. Remove `href` or add explicit
+        `aria-disabled`, focus, and click handling in the consuming app.
+      </p>
+    </div>
+  ),
+};

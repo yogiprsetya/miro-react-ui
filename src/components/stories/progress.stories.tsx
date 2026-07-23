@@ -52,6 +52,13 @@ export const OutOfRangeInput: Story = {
   },
 };
 
+export const NegativeInput: Story = {
+  args: {
+    value: -20,
+    'aria-label': 'Clamped negative progress example',
+  },
+};
+
 export const Full: Story = {
   args: {
     value: 100,

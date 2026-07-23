@@ -44,7 +44,7 @@ export const Invalid: Story = {
     <div className="flex w-80 flex-col gap-1">
       <Label htmlFor="invalid-textarea">Board description</Label>
       <Textarea {...args} id="invalid-textarea" aria-label={undefined} />
-      <p id="invalid-textarea-error" className="text-sm text-error-600">
+      <p id="invalid-textarea-error" className="text-error-600 text-sm">
         Add at least one sentence.
       </p>
     </div>
