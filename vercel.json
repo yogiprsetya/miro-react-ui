@@ -4,10 +4,32 @@
     {
       "src": "package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "storybook-static" }
+      "config": {
+        "distDir": "storybook-static"
+      }
     }
   ],
   "routes": [
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/fonts/(.*)",
+      "dest": "/fonts/$1"
+    },
+    {
+      "src": "/(.*\\.json)$",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*\\.js)$",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*\\.css)$",
+      "dest": "/$1"
+    },
     {
       "src": "/(.*)",
       "dest": "/index.html"
