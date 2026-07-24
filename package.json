@@ -7,7 +7,6 @@
     "dev": "storybook dev -p 6006",
     "storybook": "storybook dev -p 6006",
     "build": "storybook build",
-    "build:storybook": "storybook build",
     "build:lib": "tsc -p tsconfig.lib.json && vite build --config vite.lib.config.ts",
     "test": "vitest run --project unit",
     "test:coverage": "vitest run --project unit --coverage",
