@@ -6,6 +6,18 @@ import { mswHandlers } from './msw-handlers';
 
 initialize({ onUnhandledRequest: 'bypass' });
 
+// Suppress "Illegal invocation" errors from focus() calls in Docs addon
+if (typeof window !== 'undefined') {
+  const originalError = console.error;
+  console.error = (...args: unknown[]) => {
+    const errorStr = String(args[0] ?? '');
+    if (errorStr.includes('Illegal invocation') && errorStr.includes('focus')) {
+      return;
+    }
+    originalError(...args);
+  };
+}
+
 const preview: Preview = {
   decorators: [(Story) => <Story />],
   loaders: [mswLoader],
